@@ -1,6 +1,6 @@
-# ACE1 serverless Graphql API
+# SOM serverless Graphql API
 
-Guideline and examples for ACE1 serverless Graphql , encouraging consistency, maintainability, and best practices across applications.   
+Guideline and examples for SOM serverless Graphql , encouraging consistency, maintainability, and best practices across applications.   
 
 ## Prerequisites
 
@@ -22,19 +22,17 @@ yarn global add serverless
 First clone the project: 
 
 ```
-git clone git@github.com:ace1-intermediacao-de-negocios-ltda/graphql-serverless-api.git
 ```
 
 Or via https: 
 
 ```
-https://github.com/ace1-intermediacao-de-negocios-ltda/graphql-serverless-api.git
 ```
 
 Go to the project root folder:
 
 ```
-cd graphql-serverless-api.git
+cd 
 ```
 
 In root directory install the dependecies:
