@@ -1,26 +1,36 @@
+// has_show_house: Boolean
+// space_capacity: SpaceCapacity
+// events: [Event]
 export default `
     type Productor {
         user: User
         name: String
-        description: String
         hometown: String
+        city: String
+        producer_time: String
+        site_link: String
+        facebook_page_link: String
+
         google_id: String
         twitter_id: String
         instagram_id: String
         spotify_id: String
         facebook_id: String
-        events: [Event]
+
     }
     input ProductorInput {
-        user: String
+        user: ID
         name: String
-        description: String
         hometown: String
+        city: String
+        producer_time: String
+        site_link: String
+        facebook_page_link: String
+
         google_id: String
         twitter_id: String
         instagram_id: String
         spotify_id: String
         facebook_id: String
-        events: [String]
     }
 `;

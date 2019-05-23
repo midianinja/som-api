@@ -4,7 +4,8 @@ export default `
     ida: String
   ): User
 
-  users( 
-    user: userInput
+  allUsers( 
+    user: UserInput
+    paginator: PaginatorInput
   ): [User]
 `;
