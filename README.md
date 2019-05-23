@@ -22,17 +22,19 @@ yarn global add serverless
 First clone the project: 
 
 ```
+git clone git@github.com:midianinja/som-api.git
 ```
 
 Or via https: 
 
 ```
+git clone https://github.com/midianinja/som-api.git
 ```
 
 Go to the project root folder:
 
 ```
-cd 
+cd som-api
 ```
 
 In root directory install the dependecies:
@@ -50,7 +52,7 @@ sudo service mongod start
 Start the server locally:
 
 ```
-sls offline start
+yarn dev
 ```
 
 The default port is 3000
@@ -75,5 +77,5 @@ The default port is 3000
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ace1-intermediacao-de-negocios-ltda/ace-1-app/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/midianinja/som-api/tags). 
 
