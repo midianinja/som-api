@@ -18,6 +18,10 @@ Before start, install the serverless using the yarn:
 ```
 yarn global add serverless
 ```
+Or via npm
+```
+nom i -g serverless
+```
 
 First clone the project: 
 
@@ -40,7 +44,12 @@ cd som-api
 In root directory install the dependecies:
 
 ```
-yarn install
+yarn
+```
+
+or via npm
+```
+npm i
 ```
 
 Run the mongoDB:
@@ -53,6 +62,11 @@ Start the server locally:
 
 ```
 yarn dev
+```
+
+or you can run using IP and port
+```
+yarn dev --host 192.168.0.1 --port 3000
 ```
 
 The default port is 3000
