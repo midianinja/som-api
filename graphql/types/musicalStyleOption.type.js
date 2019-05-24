@@ -1,11 +1,10 @@
-// instruments: [Instrument]
 export default `
-  type MusicalStyle {
+  type MusicalStyleOption {
     _id: ID
     name: String
   }
   
-  input MusicalStyleInput {
+  input MusicalStyleOptionInput {
     _id: ID
     name: String
   }

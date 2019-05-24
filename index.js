@@ -6,7 +6,16 @@ const server = new ApolloServer(
   {
     schema: makeExecutableSchema(schema),
     introspection: true,
-    playground: true,
+    playground: {
+      settings: {
+        'editor.theme': 'dark',
+      },
+      tabs: [
+        {
+          endpoint: '/graphql',
+        },
+      ],
+    },
     path: '/graphql',
     context: ({ event, context }) => {
       const mongoDB = new MongoDB();
@@ -20,6 +29,12 @@ const server = new ApolloServer(
         functionName: context.functionName,
         event,
         context,
+        acessibilityOptions: mongoDB.AcessibilityOptions,
+        categoryOptions: mongoDB.CategoryOptions,
+        musicalStyleOptions: mongoDB.MusicalStyleOptions,
+        spaceCapacityOptions: mongoDB.SpaceCapacityOptions,
+        productors: mongoDB.Productors,
+        artists: mongoDB.Artists,
         users: mongoDB.Users,
       });
     },

@@ -1,28 +1,30 @@
-import acessibility from './acessibility.resolver';
-import artist from './artist.resolver';
-import category from './category.resolver';
-import musicalStyle from './musicalStyle.resolver';
+import acessibilityOption from './acessibilityOption.resolver';
+import categoryOption from './categoryOption.resolver';
+import musicalStyleOption from './musicalStyleOption.resolver';
+import spaceCapacityOption from './spaceCapacityOption.resolver';
 import productor from './productor.resolver';
-import spaceCapacity from './spaceCapacity.resolver';
+import artist from './artist.resolver';
 import user from './user.resolver';
+import database from './database.resolver';
 
 export default {
   Query: {
-    ...acessibility.queries,
-    ...artist.queries,
-    ...category.queries,
-    ...musicalStyle.queries,
+    ...acessibilityOption.queries,
+    ...categoryOption.queries,
+    ...musicalStyleOption.queries,
+    ...spaceCapacityOption.queries,
     ...productor.queries,
-    ...spaceCapacity.queries,
+    ...artist.queries,
     ...user.queries,
   },
   Mutation: {
-    ...acessibility.mutations,
-    ...artist.mutations,
-    ...category.mutations,
-    ...musicalStyle.mutations,
+    ...acessibilityOption.mutations,
+    ...categoryOption.mutations,
+    ...musicalStyleOption.mutations,
+    ...spaceCapacityOption.mutations,
     ...productor.mutations,
-    ...spaceCapacity.mutations,
+    ...artist.mutations,
     ...user.mutations,
+    ...database.mutations,
   },
 };

@@ -1,10 +1,10 @@
 import artistType from './artist.type';
 import productorType from './productor.type';
 import userType from './user.type';
-import acessibilityType from './acessibility.type';
-import categoryType from './category.type';
-import musicalStyleType from './musicalStyle.type';
-import spaceCapacityType from './spaceCapacity.type';
+import acessibilityOptionType from './acessibilityOption.type';
+import categoryOptionType from './categoryOption.type';
+import musicalStyleOptionType from './musicalStyleOption.type';
+import spaceCapacityOptionType from './spaceCapacityOption.type';
 import paginatorType from './paginator.type';
 
 export default `
@@ -13,9 +13,10 @@ export default `
   ${artistType}
   ${productorType}
   ${userType}
-  ${acessibilityType}
-  ${categoryType}
-  ${musicalStyleType}
-  ${spaceCapacityType}
+
+  ${acessibilityOptionType}
+  ${categoryOptionType}
+  ${musicalStyleOptionType}
+  ${spaceCapacityOptionType}
   ${paginatorType}
 `;

@@ -10,8 +10,8 @@ export default `
     members_number: Int
     hometown: String
     city: String
-    musical_style: MusicalStyle
-    
+    musical_style: MusicalStyleOption
+    category: CategoryOption
 
     google_id: String
     twitter_id: String
@@ -28,7 +28,7 @@ export default `
     city: String
     musical_style: ID
     instruments: [ID]
-    type: ID
+    category: ID
     
     participated_events: [ID]
     subscribed_events: [ID]

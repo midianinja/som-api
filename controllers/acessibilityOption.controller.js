@@ -1,24 +1,18 @@
 import { sliceArgs } from '../utils/query.utils';
 
 /**
-  * create - Essa função cria um artista na base de dados
+  * create - Essa função cria uma opção de acessibilidade na base de dados
   *
   * @function create
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { artists }) => {
-  const validate = {}; // validateArtist(); fazer função de validação
+const create = (parent, args, { acessibilityOptions }) => {
+  const validate = {}; // validateAcessibilityOption(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  // Craete artist in the database
-  return artists.create(args.artist)
-    .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
-    .populate('subscribed_events')
-    .populate('openeds_events')
+  return acessibilityOptions.create(args.acessibility_option)
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -26,23 +20,22 @@ const create = (parent, args, { artists }) => {
 };
 
 /**
-  * update - Essa função atualiza um artista na base de dados
+  * update - Essa função atualiza uma opção de acessibilidade.
   *
   * @function update
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const update = (parent, args, { artists }) => {
-  const validate = {}; // validateArtist(); fazer função de validação
+const update = (parent, args, { acessibilityOptions }) => {
+  const validate = {}; // validateAcessibilityOption(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return artists.findOneAndUpdate({ _id: args.artist_id }, args.artist, { new: true })
-    .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
-    .populate('subscribed_events')
-    .populate('openeds_events')
+  return acessibilityOptions.findOneAndUpdate(
+    { _id: args.acessibility_option_id },
+    args.acessibility_option,
+    { new: true },
+  )
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -50,22 +43,17 @@ const update = (parent, args, { artists }) => {
 };
 
 /**
-  * findOne - Essa função procura e retorna um artista na base de dados
+  * findOne - Essa função procura e returna uma opção de acessibilidade.
   *
   * @function findOne
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findOne = (parent, args, { artists }) => {
+const findOne = (parent, args, { acessibilityOptions }) => {
   const options = sliceArgs(args);
 
-  return artists.findOne(options.query.artist)
-    .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
-    .populate('subscribed_events')
-    .populate('openeds_events')
+  return acessibilityOptions.findOne(options.query)
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -73,21 +61,16 @@ const findOne = (parent, args, { artists }) => {
 };
 
 /**
-  * findAll - Essa função procura e retorna vários artistas da base de dados
+  * findAll - Essa função procura e retorna varias opções de acessibilidade.
   *
   * @function findAll
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findAll = (parent, args, { artists }) => {
+const findAll = (parent, args, { acessibilityOptions }) => {
   const options = sliceArgs(args);
-  return artists.find(options.query.artist)
-    .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
-    .populate('subscribed_events')
-    .populate('openeds_events')
+  return acessibilityOptions.find(options.query.acessibility_option)
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);

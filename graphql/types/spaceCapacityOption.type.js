@@ -1,11 +1,11 @@
 // instruments: [Instrument]
 export default `
-  type Category {
+  type SpaceCapacityOption {
     _id: ID
     label: String
   }
   
-  input CategoryInput {
+  input SpaceCapacityOptionInput {
     _id: ID
     label: String
   }

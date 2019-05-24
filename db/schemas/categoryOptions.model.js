@@ -1,8 +1,8 @@
 
 import { Schema } from 'mongoose';
 
-const spaceCapacityModel = new Schema({
+const categoryOptionsModel = new Schema({
   label: { type: String, required: true, unique: true },
 }, { timestamps: { updatedAt: 'updated_at', createdAt: 'created_at' } });
 
-export default spaceCapacityModel;
+export default categoryOptionsModel;

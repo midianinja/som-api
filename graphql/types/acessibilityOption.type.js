@@ -1,11 +1,10 @@
-// instruments: [Instrument]
 export default `
-  type Acessibility {
+  type AcessibilityOption {
     _id: ID
     label: String
   }
   
-  input AcessibilityInput {
+  input AcessibilityOptionInput {
     _id: ID
     label: String
   }

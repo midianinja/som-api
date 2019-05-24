@@ -1,44 +1,20 @@
 import { sliceArgs } from '../utils/query.utils';
 
 /**
-* validateProductorToCreate - static function that verify if productor is valid
-*
-* @
-* @function validateProductorToCreate
-* @param  {object}  parent    it contains the result returned from the resolver
-* on the parent type
-* @returns {object} it's validate response, contain the attributes error and msg.
-*/
-const validateProductorToCreate = () => ({ error: false });
-
-/**
-* validateProductorToUpdate - static function that verify if productor is valid
-*
-* @async
-* @function validateProductorToUpdate
-* @param  {object}  parent    it contains the result returned from the resolver
-* on the parent type
-* @returns {object} it's validate response, contain the attributes error and msg.
-*/
-const validateProductorToUpdate = () => ({ error: false });
-
-/**
-* create - static function that create one productor in database.
-*
-* @function create
-* @param {object} parent it contains the result returned from the resolver on the parent type
-* @param {object} args it contains filter, sort, skip and limit to build the query
-* @param {object} context it contains all mongo collections
-*/
+  * create - Essa função cria um produtor de evento na base de dados
+  *
+  * @function create
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
 const create = (parent, args, { productors }) => {
-  // Validate productor inputs
-  const validate = validateProductorToCreate(args);
+  const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  // Craete productor in the database
-  return productors.create(args)
+  return productors.create(args.productor)
     .populate('user')
-    // .populate('events')
+    .populate('events')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -46,19 +22,40 @@ const create = (parent, args, { productors }) => {
 };
 
 /**
-* findOne - function that find one productor in database, generally using an mongo _id attribute.
-*
-* @function findOne
-* @param {object} parent it contains the result returned from the resolver on the parent type
-* @param {object} args it contains filter, sort, skip and limit to build the query
-* @param {object} context it contains all mongo collections
-*/
+  * update - Essa função atualiza um produtor de evento na base de dados
+  *
+  * @function update
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const update = (parent, args, { productors }) => {
+  const validate = {}; // validateArtist(); fazer função de validação
+  if (validate.error) throw new Error(validate.msg);
+
+  return productors.findOneAndUpdate({ _id: args.productor_id }, args.productor, { new: true })
+    .populate('user')
+    .populate('events')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+/**
+  * findOne - Essa função procura e retorna um produtor de evento na base de dados
+  *
+  * @function findOne
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
 const findOne = (parent, args, { productors }) => {
   const options = sliceArgs(args);
 
-  return productors.findOne(options.query)
+  return productors.findOne(options.query.productor)
     .populate('user')
-    // .populate('events')
+    .populate('events')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -66,47 +63,23 @@ const findOne = (parent, args, { productors }) => {
 };
 
 /**
-  * findAll - function that find all productors in database,
-  *         returning all productors or some productors that
-  * have some match with indicated attribute.
+  * findAll - Essa função procura e retorna vários produtores de eventos da base de dados
   *
   * @function findAll
-  * @param {object} parent it contains the result returned from the resolver on the parent type
-  * @param {object} args it contains filter, sort, skip and limit to build the query
-  * @param {object} context it contains all mongo collections
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
   */
 const findAll = (parent, args, { productors }) => {
   const options = sliceArgs(args);
-  return productors.find(options.query)
+  return productors.find(options.query.productor)
     .populate('user')
-    // .populate('events')
+    .populate('events')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
     });
 };
-
-/**
-* update - function that update one productor in database, generally using an mongo _id attribute.
-*
-* @function update
-* @param {object} parent it contains the result returned from the resolver on the parent type
-* @param {object} args it contains filter, sort, skip and limit to build the query
-* @param {object} context it contains all mongo collections
-*/
-const update = (parent, args, { productors }) => {
-  const validate = validateProductorToUpdate(args);
-  if (validate.error) throw new Error(validate.msg);
-
-  return productors.findOneAndUpdate({ _id: args._id }, args, { new: true })
-    .populate('user')
-    // .populate('events')
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
-
 
 export default {
   create,
