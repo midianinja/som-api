@@ -7,9 +7,11 @@ import spaceCapacityOptions from './schemas/spaceCapacityOptions.model';
 import productors from './schemas/productors.model';
 import artists from './schemas/artists.model';
 import users from './schemas/users.model';
+import events from './schemas/events.model';
+import locations from './schemas/locations.model';
 
 export default class MongoDB {
-  init({ mongoUrl = 'mongodb://localhost/aceOne-local' }) {
+  init({ mongoUrl = 'mongodb://localhost/som-local' }) {
     try {
       const db = mongoose.createConnection(mongoUrl);
       this.AcessibilityOptions = db.model('acessibilityOptions', acessibilityOptions);
@@ -19,6 +21,8 @@ export default class MongoDB {
       this.Productors = db.model('productors', productors);
       this.Artists = db.model('artists', artists);
       this.Users = db.model('users', users);
+      this.Events = db.model('events', events);
+      this.Locations = db.model('locations', locations);
     } catch (err) {
       throw err;
     }

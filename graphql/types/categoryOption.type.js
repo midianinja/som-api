@@ -1,11 +1,11 @@
 export default `
   type CategoryOption {
-    _id: ID
+    id: ID
     label: String
   }
   
   input CategoryOptionInput {
-    _id: ID
+    id: ID
     label: String
   }
 `;

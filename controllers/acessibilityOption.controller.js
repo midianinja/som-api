@@ -62,7 +62,7 @@ const findOne = (parent, args, { acessibilityOptions }) => {
 
 /**
   * findAll - Essa função procura e retorna varias opções de acessibilidade.
-  *
+  *acessibility_option_id
   * @function findAll
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation

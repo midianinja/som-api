@@ -1,17 +1,19 @@
 export default `
 
   type User {
-    _id: ID
-    ida: String
+    id: ID
+    ida: String!
     type: String
+    email: String
     productor: [Productor]
     artist: [Artist]
     likes: [User]
   }
   
   input UserInput {
-    _id: ID
-    ida: String
+    id: ID
+    ida: String!
+    email: String
     type: String
     productor: [String]
     artist: [String]

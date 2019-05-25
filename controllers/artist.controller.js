@@ -14,12 +14,13 @@ const create = (parent, args, { artists }) => {
 
   // Craete artist in the database
   return artists.create(args.artist)
-    .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
-    .populate('subscribed_events')
-    .populate('openeds_events')
-    .then(resp => resp)
+    .then(resp => resp.populate('user')
+      .populate('approved_events')
+      .populate('subscribed_events')
+      .populate('recused_events')
+      .populate('musical_genres')
+      .populate('category')
+      .execPopulate())
     .catch((err) => {
       throw new Error(err);
     });
@@ -39,10 +40,11 @@ const update = (parent, args, { artists }) => {
 
   return artists.findOneAndUpdate({ _id: args.artist_id }, args.artist, { new: true })
     .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
+    .populate('approved_events')
     .populate('subscribed_events')
-    .populate('openeds_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('category')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -62,10 +64,11 @@ const findOne = (parent, args, { artists }) => {
 
   return artists.findOne(options.query.artist)
     .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
+    .populate('approved_events')
     .populate('subscribed_events')
-    .populate('openeds_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('category')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -84,10 +87,11 @@ const findAll = (parent, args, { artists }) => {
   const options = sliceArgs(args);
   return artists.find(options.query.artist)
     .populate('user')
-    .populate('musical_style')
-    .populate('participated_events')
+    .populate('approved_events')
     .populate('subscribed_events')
-    .populate('openeds_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('category')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);

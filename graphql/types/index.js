@@ -6,6 +6,8 @@ import categoryOptionType from './categoryOption.type';
 import musicalStyleOptionType from './musicalStyleOption.type';
 import spaceCapacityOptionType from './spaceCapacityOption.type';
 import paginatorType from './paginator.type';
+import locationType from './location.type';
+import eventType from './event.type';
 
 export default `
   scalar JSON
@@ -13,10 +15,13 @@ export default `
   ${artistType}
   ${productorType}
   ${userType}
+  ${locationType}
+  ${eventType}
 
   ${acessibilityOptionType}
   ${categoryOptionType}
   ${musicalStyleOptionType}
   ${spaceCapacityOptionType}
+
   ${paginatorType}
 `;

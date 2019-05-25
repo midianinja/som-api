@@ -36,6 +36,8 @@ const server = new ApolloServer(
         productors: mongoDB.Productors,
         artists: mongoDB.Artists,
         users: mongoDB.Users,
+        events: mongoDB.Events,
+        locations: mongoDB.Locations,
       });
     },
   },

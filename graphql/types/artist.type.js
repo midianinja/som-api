@@ -1,17 +1,17 @@
-// instruments: [Instrument]
-// participated_events: Event
-// type: ArtistCategory
-// subscribed_events: Event
-// openeds_events: Event
 export default `
   type Artist {
+    id: ID
     user: User
     name: String
     members_number: Int
     hometown: String
     city: String
-    musical_style: MusicalStyleOption
     category: CategoryOption
+
+    approved_events: [Event]
+    subscribed_events: [Event]
+    recused_events: [Event]
+    musical_genres: [Event]
 
     google_id: String
     twitter_id: String
@@ -21,18 +21,18 @@ export default `
   }
   
   input ArtistInput {
-    user: ID
+    id: ID
+    user: String
     name: String
     members_number: Int
     hometown: String
     city: String
-    musical_style: ID
-    instruments: [ID]
     category: ID
     
-    participated_events: [ID]
-    subscribed_events: [ID]
-    openeds_events: [ID]
+    approved_events: [String]
+    subscribed_events: [String]
+    recused_events: [String]
+    musical_genres: [String]
 
     google_id: String
     twitter_id: String

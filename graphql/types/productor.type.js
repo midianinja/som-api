@@ -3,6 +3,7 @@
 // events: [Event]
 export default `
   type Productor {
+    id: ID
     user: User
     name: String
     hometown: String
@@ -19,6 +20,7 @@ export default `
   }
 
   input ProductorInput {
+    id
     user: ID
     name: String
     hometown: String

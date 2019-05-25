@@ -1,11 +1,11 @@
 export default `
   type MusicalStyleOption {
-    _id: ID
+    id: ID
     name: String
   }
   
   input MusicalStyleOptionInput {
-    _id: ID
+    id: ID
     name: String
   }
 `;
