@@ -20,7 +20,7 @@ export default `
   }
 
   input ProductorInput {
-    id
+    id: ID
     user: ID
     name: String
     hometown: String
