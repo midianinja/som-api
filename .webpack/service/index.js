@@ -86,7 +86,7 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!***********************************!*\
   !*** ./db/schemas/users.model.js ***!
   \***********************************/
-/*! exports provided: default */function(t,e,n){"use strict";n.r(e);var r=n(/*! mongoose */"mongoose");const{ObjectId:a}=r.Schema.Types,s=new r.Schema({ida:{type:String,unique:!0,required:!0},type:{type:String,default:"commun"},email:{type:String,default:"commun"},productor:{type:String,ref:"productors"},artist:{type:String,ref:"artists"},likes:[{type:a,ref:"users"}]},{usePushEach:!0,timestamps:{updatedAt:"updated_at",createdAt:"created_at"}});e.default=s},"./graphql/mutations/acessibilityOption.mutation.js":
+/*! exports provided: default */function(t,e,n){"use strict";n.r(e);var r=n(/*! mongoose */"mongoose");const{ObjectId:a}=r.Schema.Types,s=new r.Schema({ida:{type:String,unique:!0,required:!0},type:{type:String,default:"commun"},email:{type:String,default:"commun"},productor:{type:String,ref:"productors"},artists:[{type:String,ref:"artists"}],likes:[{type:a,ref:"users"}]},{usePushEach:!0,timestamps:{updatedAt:"updated_at",createdAt:"created_at"}});e.default=s},"./graphql/mutations/acessibilityOption.mutation.js":
 /*!**********************************************************!*\
   !*** ./graphql/mutations/acessibilityOption.mutation.js ***!
   \**********************************************************/
@@ -202,7 +202,7 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!**************************************!*\
   !*** ./graphql/types/artist.type.js ***!
   \**************************************/
-/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n  type Artist {\n    id: ID\n    user: User\n    name: String\n    members_number: Int\n    hometown: String\n    city: String\n    category: CategoryOption\n\n    approved_events: [Event]\n    subscribed_events: [Event]\n    recused_events: [Event]\n    musical_genres: [Event]\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n  \n  input ArtistInput {\n    id: ID\n    user: String\n    name: String\n    members_number: Int\n    hometown: String\n    city: String\n    category: ID\n    \n    approved_events: [String]\n    subscribed_events: [String]\n    recused_events: [String]\n    musical_genres: [String]\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n"},"./graphql/types/categoryOption.type.js":
+/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n  type Artist {\n    id: ID\n    name: String\n    members_number: Int\n    hometown: String\n    city: String\n    category: CategoryOption\n\n    approved_events: [Event]\n    subscribed_events: [Event]\n    recused_events: [Event]\n    musical_genres: [Event]\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n  \n  input ArtistInput {\n    id: ID\n    name: String\n    members_number: Int\n    hometown: String\n    city: String\n    category: ID\n    \n    approved_events: [String]\n    subscribed_events: [String]\n    recused_events: [String]\n    musical_genres: [String]\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n"},"./graphql/types/categoryOption.type.js":
 /*!**********************************************!*\
   !*** ./graphql/types/categoryOption.type.js ***!
   \**********************************************/
@@ -230,7 +230,7 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!*****************************************!*\
   !*** ./graphql/types/productor.type.js ***!
   \*****************************************/
-/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n  type Productor {\n    id: ID\n    user: User\n    name: String\n    hometown: String\n    city: String\n    producer_time: String\n    site_link: String\n    facebook_page_link: String\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n\n  input ProductorInput {\n    id: ID\n    user: ID\n    name: String\n    hometown: String\n    city: String\n    producer_time: String\n    site_link: String\n    facebook_page_link: String\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n"},"./graphql/types/spaceCapacityOption.type.js":
+/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n  type Productor {\n    id: ID\n    name: String\n    hometown: String\n    city: String\n    producer_time: String\n    site_link: String\n    facebook_page_link: String\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n\n  input ProductorInput {\n    id: ID\n    name: String\n    hometown: String\n    city: String\n    producer_time: String\n    site_link: String\n    facebook_page_link: String\n\n    google_id: String\n    twitter_id: String\n    instagram_id: String\n    spotify_id: String\n    facebook_id: String\n  }\n"},"./graphql/types/spaceCapacityOption.type.js":
 /*!***************************************************!*\
   !*** ./graphql/types/spaceCapacityOption.type.js ***!
   \***************************************************/
@@ -238,7 +238,7 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!************************************!*\
   !*** ./graphql/types/user.type.js ***!
   \************************************/
-/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n\n  type User {\n    id: ID\n    ida: String!\n    type: String\n    email: String\n    productor: [Productor]\n    artist: [Artist]\n    likes: [User]\n  }\n  \n  input UserInput {\n    id: ID\n    ida: String!\n    email: String\n    type: String\n    productor: [String]\n    artist: [String]\n    likes: [String]\n  }\n"},"./index.js":
+/*! exports provided: default */function(t,e,n){"use strict";n.r(e),e.default="\n\n  type User {\n    id: ID\n    ida: String!\n    type: String\n    email: String\n    productor: Productor\n    artist: [Artist]\n    likes: [User]\n  }\n  \n  input UserInput {\n    id: ID\n    ida: String!\n    email: String\n    type: String\n    productor: String\n    artists: [String]\n    likes: [String]\n  }\n"},"./index.js":
 /*!******************!*\
   !*** ./index.js ***!
   \******************/

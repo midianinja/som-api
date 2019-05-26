@@ -4,7 +4,6 @@
 export default `
   type Productor {
     id: ID
-    user: User
     name: String
     hometown: String
     city: String
@@ -21,7 +20,6 @@ export default `
 
   input ProductorInput {
     id: ID
-    user: ID
     name: String
     hometown: String
     city: String

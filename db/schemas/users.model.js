@@ -7,7 +7,7 @@ const userModel = new Schema({
   type: { type: String, default: 'commun' },
   email: { type: String, default: 'commun' },
   productor: { type: String, ref: 'productors' },
-  artist: { type: String, ref: 'artists' },
+  artists: [{ type: String, ref: 'artists' }],
   likes: [{ type: ObjectId, ref: 'users' }],
 }, {
   usePushEach: true,

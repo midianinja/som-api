@@ -1,7 +1,6 @@
 export default `
   type Artist {
     id: ID
-    user: User
     name: String
     members_number: Int
     hometown: String
@@ -22,7 +21,6 @@ export default `
   
   input ArtistInput {
     id: ID
-    user: String
     name: String
     members_number: Int
     hometown: String

@@ -5,7 +5,7 @@ export default `
     ida: String!
     type: String
     email: String
-    productor: [Productor]
+    productor: Productor
     artist: [Artist]
     likes: [User]
   }
@@ -15,8 +15,8 @@ export default `
     ida: String!
     email: String
     type: String
-    productor: [String]
-    artist: [String]
+    productor: String
+    artists: [String]
     likes: [String]
   }
 `;
