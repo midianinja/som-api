@@ -1,6 +1,3 @@
-// space_capacity: SpaceCapacity
-// has_show_house: Boolean
-// events: [Event]
 export default `
   type Productor {
     id: ID
