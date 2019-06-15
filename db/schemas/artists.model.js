@@ -5,10 +5,12 @@ const { ObjectId } = Schema.Types;
 const artistModel = new Schema({
   user: { type: ObjectId, ref: 'users' },
   name: { type: String, required: true },
+  members_number: { type: Number, default: 1 },
+  avatar: { type: String, default: '' },
+  
   description: { type: String, default: '' },
   hometown: { type: String, default: '' },
   city: { type: String, default: '' },
-  members_number: { type: Number, default: 1 },
   google_id: { type: String, default: '' },
   twitter_id: { type: String, default: '' },
   instagram_id: { type: String, default: '' },
