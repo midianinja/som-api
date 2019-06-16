@@ -3,15 +3,20 @@ export default `
     id: ID
     name: String
     members_number: Int
-    hometown: String
+    avatar_image: String
+    about: String
+    country: String
+    state: String
     city: String
+    musical_styles: [MusicalStyleOption]
+
+    
+    hometown: String
     category: CategoryOption
 
     approved_events: [Event]
     subscribed_events: [Event]
     recused_events: [Event]
-    musical_genres: [Event]
-
     google_id: String
     twitter_id: String
     instagram_id: String
@@ -23,19 +28,11 @@ export default `
     id: ID
     name: String
     members_number: Int
-    hometown: String
+    avatar_image: String
+    about: String
+    country: String
+    state: String
     city: String
-    category: ID
-    
-    approved_events: [String]
-    subscribed_events: [String]
-    recused_events: [String]
-    musical_genres: [String]
-
-    google_id: String
-    twitter_id: String
-    instagram_id: String
-    spotify_id: String
-    facebook_id: String
+    musical_styles: [String]
   }
 `;

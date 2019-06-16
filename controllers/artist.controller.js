@@ -14,12 +14,12 @@ const create = (parent, args, { artists }) => {
 
   // Craete artist in the database
   return artists.create(args.artist)
-    .then(resp => resp.populate('user')
-      .populate('approved_events')
-      .populate('subscribed_events')
-      .populate('recused_events')
-      .populate('musical_genres')
-      .populate('category')
+    .then(async resp => resp.populate('user')
+      // .populate('approved_events')
+      // .populate('subscribed_events')
+      // .populate('recused_events')
+      // .populate('category')
+      .populate('musical_styles')
       .execPopulate())
     .catch((err) => {
       throw new Error(err);
@@ -35,16 +35,16 @@ const create = (parent, args, { artists }) => {
   * @param {object} context Informações passadas no context para o apollo graphql
   */
 const update = (parent, args, { artists }) => {
+  console.log('args: ', args);
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
   return artists.findOneAndUpdate({ _id: args.artist_id }, args.artist, { new: true })
-    .populate('user')
-    .populate('approved_events')
-    .populate('subscribed_events')
-    .populate('recused_events')
-    .populate('musical_genres')
-    .populate('category')
+    // .populate('approved_events')
+    // .populate('subscribed_events')
+    // .populate('recused_events')
+    // .populate('category')
+    .populate('musical_styles')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
