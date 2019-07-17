@@ -6,6 +6,7 @@ import productor from './productor.resolver';
 import artist from './artist.resolver';
 import user from './user.resolver';
 import database from './database.resolver';
+import song from './song.resolver';
 
 export default {
   Query: {
@@ -16,6 +17,7 @@ export default {
     ...productor.queries,
     ...artist.queries,
     ...user.queries,
+    ...song.queries,
   },
   Mutation: {
     ...acessibilityOption.mutations,
@@ -26,5 +28,6 @@ export default {
     ...artist.mutations,
     ...user.mutations,
     ...database.mutations,
+    ...song.mutations,
   },
 };
