@@ -1,33 +1,25 @@
 export default `
   type Productor {
     id: ID
+    user: User
+    photo: String
     name: String
-    hometown: String
-    city: String
-    producer_time: String
-    site_link: String
-    facebook_page_link: String
-
-    google_id: String
-    twitter_id: String
-    instagram_id: String
-    spotify_id: String
-    facebook_id: String
+    description: String
+    location: Location
+    followers: [User]
+    following: [Artist]
+    events: [Event]
   }
 
   input ProductorInput {
     id: ID
+    photo: String
+    user: ID
     name: String
-    hometown: String
-    city: String
-    producer_time: String
-    site_link: String
-    facebook_page_link: String
-
-    google_id: String
-    twitter_id: String
-    instagram_id: String
-    spotify_id: String
-    facebook_id: String
+    description: String
+    location: ID
+    followers: [ID]
+    following: [ID]
+    events: [ID]
   }
 `;

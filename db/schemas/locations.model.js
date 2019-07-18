@@ -1,14 +1,14 @@
 import { Schema } from 'mongoose';
 
 const locationModel = new Schema({
-  address: { type: String, required: true },
-  complement: { type: String, default: '' },
-  district: { type: String, required: true },
+  address: { type: String },
+  complement: { type: String },
+  district: { type: String },
   city: { type: String, required: true },
   number: { type: String },
   zipcode: { type: String, required: true },
   state: { type: String, required: true },
-  geometry: { type: Object, required: true },
+  geometry: { type: Object },
   place_id: { type: String },
 }, {
   usePushEach: true,

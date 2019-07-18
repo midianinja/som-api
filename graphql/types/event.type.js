@@ -2,11 +2,14 @@ export default `
   type Event {
     id: ID
     productor: Productor 
-    artists: [Artist]
+    approved_artists: [Artist]
     subscribers: [Artist]
     location: Location
+    about: String
     
     name: String
+    cover: String
+    photo: String
     site: String
     oportunities: Int
     event_date: String
@@ -15,18 +18,19 @@ export default `
     has_food: Boolean
     has_local_transportation: Boolean
     has_city_transportation: Boolean
-    has_interstate_transportation: Boolean
+    has_money_paid: Boolean
   }
   
   input EventInput {
-    id: ID
     productor: String 
-    artists: [String]
+    approved_artists: [String]
     subscribers: [String]
     location: String
     
     name: String
     site: String
+    photo: String
+    cover: String
     oportunities: Int
     event_date: String
     
@@ -34,6 +38,6 @@ export default `
     has_food: Boolean
     has_local_transportation: Boolean
     has_city_transportation: Boolean
-    has_interstate_transportation: Boolean
+    has_money_paid: Boolean
   }
 `;

@@ -1,11 +1,12 @@
 import acessibilityOptionMutation from './acessibilityOption.mutation';
-import categoryOptionMutation from './categoryOption.mutation';
-import musicalStyleOptionMutation from './musicalStyleOption.mutation';
-import spaceCapacityOptionMutation from './spaceCapacityOption.mutation';
-import productorMutation from './productor.mutation';
 import artistMutation from './artist.mutation';
-import userMutation from './user.mutation';
+import categoryOptionMutation from './categoryOption.mutation';
 import databaseMutation from './database.mutation';
+import eventMutation from './event.mutation';
+import musicalStyleOptionMutation from './musicalStyleOption.mutation';
+import productorMutation from './productor.mutation';
+import spaceCapacityOptionMutation from './spaceCapacityOption.mutation';
+import userMutation from './user.mutation';
 
 export default `
   type Mutation {
@@ -18,5 +19,6 @@ export default `
     ${artistMutation}
     ${userMutation}
     ${databaseMutation}
+    ${eventMutation}
   }
 `;

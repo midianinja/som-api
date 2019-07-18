@@ -7,6 +7,7 @@ import spaceCapacityOptionQuery from './spaceCapacityOption.query';
 import productorQuery from './productor.query';
 import artistQuery from './artist.query';
 import userQuery from './user.query';
+import eventQuery from './event.query';
 
 export default `
   type Query {
@@ -18,5 +19,6 @@ export default `
     ${productorQuery}
     ${artistQuery}
     ${userQuery}
+    ${eventQuery}
   }
 `;

@@ -4,14 +4,12 @@ const { ObjectId } = Schema.Types;
 
 const productModel = Schema({
   user: { type: ObjectId, ref: 'users' },
-  name: { type: String, required: true },
+  photo: { type: String, default: '' },
+  name: { type: String, defualt: '' },
   description: { type: String, default: '' },
-  hometown: { type: String, default: '' },
-  google_id: { type: String, default: '' },
-  twitter_id: { type: String, default: '' },
-  instagram_id: { type: String, default: '' },
-  spotify_id: { type: String, default: '' },
-  facebook_id: { type: String, default: '' },
+  location: { type: ObjectId, ref: 'locations' },
+  followers: [{ type: ObjectId, ref: 'users' }],
+  following: [{ type: ObjectId, ref: 'artists' }],
   events: [{ type: ObjectId, ref: 'events' }],
 }, {
   usePushEach: true,

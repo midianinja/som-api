@@ -1,41 +1,55 @@
 import { sliceArgs } from '../utils/query.utils';
 
 /**
-  * create - Essa função cria um produtor de evento na base de dados
+  * create - Essa função cria um evento na base de dados
   *
   * @function create
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { productors }) => {
-  const validate = {}; // validateArtist(); fazer função de validação
+const create = (parent, args, { events }) => {
+  const validate = {}; // validateEvent(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return productors.create(args.productor)
+  return events.create(args.event)
     .then(resp => resp
-      .populate('user')
-      .populate('events'))
+      .populate('approved_artists')
+      .populate({
+        path: 'productor',
+        populate: {
+          path: 'location',
+        },
+      })
+      .populate('location')
+      .populate('subscribers'))
     .catch((err) => {
       throw new Error(err);
     });
 };
 
 /**
-  * update - Essa função atualiza um produtor de evento na base de dados
+  * update - Essa função atualiza um evento de evento na base de dados
   *
   * @function update
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const update = (parent, args, { productors }) => {
+const update = (parent, args, { events }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return productors.findOneAndUpdate({ _id: args.productor_id }, args.productor, { new: true })
-    .populate('user')
-    .populate('events')
+  return events.findOneAndUpdate({ _id: args.event_id }, args.event, { new: true })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -43,19 +57,26 @@ const update = (parent, args, { productors }) => {
 };
 
 /**
-  * findOne - Essa função procura e retorna um produtor de evento na base de dados
+  * findOne - Essa função procura e retorna um evento base de dados
   *
   * @function findOne
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findOne = (parent, args, { productors }) => {
+const findOne = (parent, args, { events }) => {
   const options = sliceArgs(args);
 
-  return productors.findOne(options.query.productor)
-    .populate('user')
-    .populate('events')
+  return events.findOne({ _id: options.query.id })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -63,18 +84,25 @@ const findOne = (parent, args, { productors }) => {
 };
 
 /**
-  * findAll - Essa função procura e retorna vários produtores de eventos da base de dados
+  * findAll - Essa função procura e retorna vários eventos da base de dados
   *
   * @function findAll
   * @param {object} parent Informações de um possível pai
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findAll = (parent, args, { productors }) => {
+const findAll = (parent, args, { events }) => {
   const options = sliceArgs(args);
-  return productors.find(options.query.productor)
-    .populate('user')
-    .populate('events')
+  return events.find(options.query.event)
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
