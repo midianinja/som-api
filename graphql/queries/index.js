@@ -8,6 +8,7 @@ import productorQuery from './productor.query';
 import artistQuery from './artist.query';
 import userQuery from './user.query';
 import eventQuery from './event.query';
+import songQuery from './song.query';
 
 export default `
   type Query {
@@ -20,5 +21,6 @@ export default `
     ${artistQuery}
     ${userQuery}
     ${eventQuery}
+    ${songQuery}
   }
 `;

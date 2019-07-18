@@ -7,6 +7,7 @@ import musicalStyleOptionMutation from './musicalStyleOption.mutation';
 import productorMutation from './productor.mutation';
 import spaceCapacityOptionMutation from './spaceCapacityOption.mutation';
 import userMutation from './user.mutation';
+import songMutation from './song.mutation';
 
 export default `
   type Mutation {
@@ -14,6 +15,7 @@ export default `
     ${categoryOptionMutation}
     ${musicalStyleOptionMutation}
     ${spaceCapacityOptionMutation}
+    ${songMutation}
 
     ${productorMutation}
     ${artistMutation}

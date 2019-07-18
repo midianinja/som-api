@@ -7,6 +7,7 @@ import artist from './artist.resolver';
 import user from './user.resolver';
 import database from './database.resolver';
 import event from './event.resolver';
+import song from './song.resolver';
 
 export default {
   Query: {
@@ -18,6 +19,7 @@ export default {
     ...artist.queries,
     ...user.queries,
     ...event.queries,
+    ...song.queries,
   },
   Mutation: {
     ...acessibilityOption.mutations,
@@ -29,5 +31,6 @@ export default {
     ...user.mutations,
     ...database.mutations,
     ...event.mutations,
+    ...song.mutations,
   },
 };

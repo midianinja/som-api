@@ -20,6 +20,7 @@ const create = (parent, args, { artists }) => {
       // .populate('recused_events')
       // .populate('category')
       .populate('musical_styles')
+      .populate('songs')
       .execPopulate())
     .catch((err) => {
       throw new Error(err);
@@ -35,7 +36,6 @@ const create = (parent, args, { artists }) => {
   * @param {object} context Informações passadas no context para o apollo graphql
   */
 const update = (parent, args, { artists }) => {
-  console.log('args: ', args);
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
@@ -43,7 +43,7 @@ const update = (parent, args, { artists }) => {
     // .populate('approved_events')
     // .populate('subscribed_events')
     // .populate('recused_events')
-    // .populate('category')
+    .populate('songs')
     .populate('musical_styles')
     .then(resp => resp)
     .catch((err) => {

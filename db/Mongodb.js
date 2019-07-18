@@ -9,6 +9,7 @@ import artists from './schemas/artists.model';
 import users from './schemas/users.model';
 import events from './schemas/events.model';
 import locations from './schemas/locations.model';
+import songs from './schemas/songs.model';
 
 export default class MongoDB {
   init({ mongoUrl = 'mongodb://localhost/som-local' }) {
@@ -23,6 +24,7 @@ export default class MongoDB {
       this.Users = db.model('users', users);
       this.Events = db.model('events', events);
       this.Locations = db.model('locations', locations);
+      this.Songs = db.model('songs', songs);
     } catch (err) {
       throw err;
     }
