@@ -8,5 +8,7 @@ export default {
   mutations: {
     createEvent: EventController.create,
     updateEvent: EventController.update,
+    subscribeEvent: EventController.subscribe,
+    unsubscribeEvent: EventController.unsubscribe,
   },
 };

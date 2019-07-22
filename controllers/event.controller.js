@@ -109,9 +109,39 @@ const findAll = (parent, args, { events }) => {
     });
 };
 
+/**
+  * subscribe - Essa função adiciona artista aos inscritos
+  *
+  * @function subscribe
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const subscribe = (parent, args, { events }) => {
+  const { id, artistID } = args;
+  return events.findOneAndUpdate({ _id: id }, { subscribers: artistID }, { new: true });
+};
+
+/**
+  * unsubscribe - Essa função remove artista aos inscritos
+  *
+  * @function unsubscribe
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const unsubscribe = (parent, args, { events }) => {
+  const { id, artistID } = args;
+  return events.findOneAndUpdate({ _id: id }, {
+    $pull: { subscribers: artistID },
+  }, { new: true });
+};
+
 export default {
   create,
   findOne,
   findAll,
   update,
+  unsubscribe,
+  subscribe,
 };

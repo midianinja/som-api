@@ -12,12 +12,7 @@ const create = (parent, args, { users }) => {
   const validate = {}; // validateUser(); fazer função de validaçã
   if (validate.error) throw new Error(validate.msg);
 
-  // Craete user in the database
-  return users.create(args.user)
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
+  return users.create(args.user);
 };
 
 /**
@@ -33,10 +28,7 @@ const update = (parent, args, { users }) => {
   if (validate.error) throw new Error(validate.msg);
 
   return users.findOneAndUpdate({ _id: args.user_id }, args.user, { new: true })
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
+    .populate('artists');
 };
 
 /**
@@ -51,10 +43,7 @@ const findOne = (parent, args, { users }) => {
   const options = sliceArgs(args);
 
   return users.findOne(options.query)
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
+    .populate('artists');
 };
 
 /**
@@ -68,10 +57,7 @@ const findOne = (parent, args, { users }) => {
 const findAll = (parent, args, { users }) => {
   const options = sliceArgs(args);
   return users.find(options.query)
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
+    .populate('artists');
 };
 
 export default {

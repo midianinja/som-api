@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
 import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
@@ -18,6 +19,9 @@ const server = new ApolloServer(
     },
     path: '/graphql',
     context: ({ event, context }) => {
+      const { ObjectId } = mongoose.Types;
+      ObjectId.prototype.valueOf = () => this.toString();
+
       const mongoDB = new MongoDB();
       mongoDB.init({
         env: event.stageVariables ? event.stageVariables.env : 'local',
