@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
 import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
@@ -19,13 +19,12 @@ const server = new ApolloServer(
     },
     path: '/graphql',
     context: ({ event, context }) => {
-      const { ObjectId } = mongoose.Types;
-      ObjectId.prototype.valueOf = () => this.toString();
+      dotenv.config();
 
       const mongoDB = new MongoDB();
       mongoDB.init({
         env: event.stageVariables ? event.stageVariables.env : 'local',
-        mongoUrl: event.stageVariables ? event.stageVariables.mongoUrl : 'mongodb://localhost/som-local',
+        mongoUrl: process.env.MONGO_URL,
       });
 
       return ({
