@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: graphql-serverless-api # NOTE: update this with your service name
+service: som-api # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -69,16 +69,12 @@ functions:
     handler: index.graphqlHandler
     events:
      - http:
-        path: graphql
         method: POST
+        path: /
         cors: true
      - http:
-        path: graphql
         method: GET
-        cors: true
-     - http:
         path: playground
-        method: GET
         cors: true
 
 #    The following are a few example events you can configure
