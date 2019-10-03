@@ -286,7 +286,7 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!******************!*\
   !*** ./index.js ***!
   \******************/
-/*! exports provided: graphqlHandler, default */function(t,e,n){"use strict";n.r(e),n.d(e,"graphqlHandler",function(){return i});var r=n(/*! apollo-server-lambda */"apollo-server-lambda"),a=n(/*! ./graphql/schema */"./graphql/schema.js"),s=n(/*! ./db/Mongodb */"./db/Mongodb.js");let o=null;const i=new r.ApolloServer({schema:Object(r.makeExecutableSchema)(a.default),introspection:!0,playground:{settings:{"editor.theme":"dark"},tabs:[{endpoint:"/graphql"}]},path:"/graphql",context:async({event:t,context:e})=>(o=await Object(s.default)({conn:o,mongoUrl:t.stageVariables?`mongodb+${t.stageVariables.MONGO_URL}`:void 0}),{headers:t.headers,functionName:e.functionName,event:t,context:e,acessibilityOptions:o.model("acessibilityOptions"),categoryOptions:o.model("categoryOptions"),musicalStyleOptions:o.model("musicalStyleOptions"),spaceCapacityOptions:o.model("spaceCapacityOptions"),productors:o.model("productors"),artists:o.model("artists"),users:o.model("users"),events:o.model("events"),locations:o.model("locations"),songs:o.model("songs")})}).createHandler({cors:{origin:"*",credentials:!0}});e.default=i},"./utils/query.utils.js":
+/*! exports provided: graphqlHandler, default */function(t,e,n){"use strict";n.r(e),n.d(e,"graphqlHandler",function(){return l});var r=n(/*! dotenv */"dotenv"),a=n.n(r),s=n(/*! apollo-server-lambda */"apollo-server-lambda"),o=n(/*! ./graphql/schema */"./graphql/schema.js"),i=n(/*! ./db/Mongodb */"./db/Mongodb.js");a.a.config();let u=null;const l=new s.ApolloServer({schema:Object(s.makeExecutableSchema)(o.default),introspection:!0,playground:{settings:{"editor.theme":"dark"},tabs:[{endpoint:"/graphql"}]},path:"/graphql",context:async({event:t,context:e})=>(u=await Object(i.default)({conn:u,mongoUrl:t.stageVariables?`mongodb+${t.stageVariables.MONGO_URL}`:process.env.MONGO_URL}),console.log(u),{headers:t.headers,functionName:e.functionName,event:t,context:e,acessibilityOptions:u.model("acessibilityOptions"),categoryOptions:u.model("categoryOptions"),musicalStyleOptions:u.model("musicalStyleOptions"),spaceCapacityOptions:u.model("spaceCapacityOptions"),productors:u.model("productors"),artists:u.model("artists"),users:u.model("users"),events:u.model("events"),locations:u.model("locations"),songs:u.model("songs")})}).createHandler({cors:{origin:"*",methods:"POST",allowedHeaders:["Content-Type","Origin","Accept"],credentials:!0}});e.default=l},"./utils/query.utils.js":
 /*!******************************!*\
   !*** ./utils/query.utils.js ***!
   \******************************/
@@ -294,7 +294,11 @@ module.exports=function(t){var e={};function n(r){if(e[r])return e[r].exports;va
 /*!***************************************!*\
   !*** external "apollo-server-lambda" ***!
   \***************************************/
-/*! no static exports found */function(t,e){t.exports=require("apollo-server-lambda")},mongoose:
+/*! no static exports found */function(t,e){t.exports=require("apollo-server-lambda")},dotenv:
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/*! no static exports found */function(t,e){t.exports=require("dotenv")},mongoose:
 /*!***************************!*\
   !*** external "mongoose" ***!
   \***************************/

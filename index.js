@@ -1,8 +1,9 @@
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
 import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
 
+dotenv.config();
 let conn = null;
 
 const server = new ApolloServer(
@@ -23,8 +24,10 @@ const server = new ApolloServer(
     context: async ({ event, context }) => {
       conn = await MongoDB({
         conn,
-        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : undefined,
+        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : process.env.MONGO_URL,
       });
+
+      console.log(conn);
       return ({
         headers: event.headers,
         functionName: context.functionName,
@@ -40,6 +43,7 @@ const server = new ApolloServer(
         events: conn.model('events'),
         locations: conn.model('locations'),
         songs: conn.model('songs'),
+
       });
     },
   },
@@ -48,8 +52,15 @@ const server = new ApolloServer(
 const graphqlHandler = server.createHandler({
   cors: {
     origin: '*',
+    methods: 'POST',
+    allowedHeaders: [
+      'Content-Type',
+      'Origin',
+      'Accept',
+    ],
     credentials: true,
   },
 });
+
 export { graphqlHandler };
 export default graphqlHandler;

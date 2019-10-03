@@ -70,8 +70,17 @@ functions:
     events:
      - http:
         method: POST
-        path: /
-        cors: true
+        path: /graphql
+        cors:
+          origins:
+            - http://*
+            - https://*
+          headers:
+            - Content-Type
+            - Access-Control-Allow-Origin
+            - Origin
+            - Accept
+          allowCredentials: true
      - http:
         method: GET
         path: playground
