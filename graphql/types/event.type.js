@@ -28,6 +28,7 @@ export default `
     location: String
     
     name: String
+    about: String
     site: String
     photo: String
     cover: String
