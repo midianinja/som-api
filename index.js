@@ -1,3 +1,4 @@
+// import dotenv from 'dotenv';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
 import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
@@ -24,7 +25,6 @@ const server = new ApolloServer(
         conn,
         mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : undefined,
       });
-
       return ({
         headers: event.headers,
         functionName: context.functionName,
