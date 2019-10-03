@@ -38,7 +38,7 @@
   "scripts": {
     "test": "jest",
     "webpack": "webpack",
-    "dev": "eslint . && sls offline start",
+    "dev": "eslint . && sls offline start --skipCacheInvalidation",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

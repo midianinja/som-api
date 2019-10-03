@@ -11,22 +11,31 @@ import events from './schemas/events.model';
 import locations from './schemas/locations.model';
 import songs from './schemas/songs.model';
 
-export default class MongoDB {
-  init({ mongoUrl = 'mongodb://localhost/som-local' }) {
-    try {
-      const db = mongoose.createConnection(mongoUrl);
-      this.AcessibilityOptions = db.model('acessibilityOptions', acessibilityOptions);
-      this.CategoryOptions = db.model('categoryOptions', categoryOptions);
-      this.MusicalStyleOptions = db.model('musicalStyleOptions', musicalStyleOptions);
-      this.SpaceCapacityOptions = db.model('spaceCapacityOptions', spaceCapacityOptions);
-      this.Productors = db.model('productors', productors);
-      this.Artists = db.model('artists', artists);
-      this.Users = db.model('users', users);
-      this.Events = db.model('events', events);
-      this.Locations = db.model('locations', locations);
-      this.Songs = db.model('songs', songs);
-    } catch (err) {
-      throw err;
+export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
+  try {
+    if (!conn) {
+      console.log('=> using new database connection');
+
+      const newConnection = await mongoose.createConnection(mongoUrl, {
+        bufferCommands: false,
+        bufferMaxEntries: 0,
+        keepAlive: true,
+      });
+      newConnection.model('acessibilityOptions', acessibilityOptions);
+      newConnection.model('categoryOptions', categoryOptions);
+      newConnection.model('musicalStyleOptions', musicalStyleOptions);
+      newConnection.model('spaceCapacityOptions', spaceCapacityOptions);
+      newConnection.model('productors', productors);
+      newConnection.model('artists', artists);
+      newConnection.model('users', users);
+      newConnection.model('events', events);
+      newConnection.model('locations', locations);
+      newConnection.model('songs', songs);
+      return newConnection;
     }
+    console.log('=> using existing database connection');
+    return conn;
+  } catch (err) {
+    throw err;
   }
-}
+};

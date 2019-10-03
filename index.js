@@ -1,7 +1,9 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import { ApolloServer, makeExecutableSchema } from 'apollo-server-lambda';
 import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
+
+let conn = null;
 
 const server = new ApolloServer(
   {
@@ -18,35 +20,36 @@ const server = new ApolloServer(
       ],
     },
     path: '/graphql',
-    context: ({ event, context }) => {
-      dotenv.config();
-
-      const mongoDB = new MongoDB();
-      mongoDB.init({
-        env: event.stageVariables ? event.stageVariables.env : 'local',
-        mongoUrl: process.env.MONGO_URL,
+    context: async ({ event, context }) => {
+      conn = await MongoDB({
+        conn,
+        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : undefined,
       });
-
       return ({
         headers: event.headers,
         functionName: context.functionName,
         event,
         context,
-        acessibilityOptions: mongoDB.AcessibilityOptions,
-        categoryOptions: mongoDB.CategoryOptions,
-        musicalStyleOptions: mongoDB.MusicalStyleOptions,
-        spaceCapacityOptions: mongoDB.SpaceCapacityOptions,
-        productors: mongoDB.Productors,
-        artists: mongoDB.Artists,
-        users: mongoDB.Users,
-        events: mongoDB.Events,
-        locations: mongoDB.Locations,
-        songs: mongoDB.Songs,
+        acessibilityOptions: conn.model('acessibilityOptions'),
+        categoryOptions: conn.model('categoryOptions'),
+        musicalStyleOptions: conn.model('musicalStyleOptions'),
+        spaceCapacityOptions: conn.model('spaceCapacityOptions'),
+        productors: conn.model('productors'),
+        artists: conn.model('artists'),
+        users: conn.model('users'),
+        events: conn.model('events'),
+        locations: conn.model('locations'),
+        songs: conn.model('songs'),
       });
     },
   },
 );
 
-const graphqlHandler = server.createHandler();
+const graphqlHandler = server.createHandler({
+  cors: {
+    origin: '*',
+    credentials: true,
+  },
+});
 export { graphqlHandler };
 export default graphqlHandler;
