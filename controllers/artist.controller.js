@@ -8,12 +8,12 @@ import { sliceArgs } from '../utils/query.utils';
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { artists }) => {
+const create = async (parent, args, { artists, users }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
   // Craete artist in the database
-  return artists.create(args.artist)
+  const artist = await artists.create(args.artist)
     .then(async resp => resp.populate('user')
       // .populate('approved_events')
       // .populate('subscribed_events')
@@ -25,6 +25,14 @@ const create = (parent, args, { artists }) => {
     .catch((err) => {
       throw new Error(err);
     });
+
+  await users.findOneAndUpdate(
+    { _id: artist.user._id },
+    { artist: artist._id },
+    { new: true },
+  );
+
+  return artist;
 };
 
 /**

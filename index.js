@@ -27,7 +27,6 @@ const server = new ApolloServer(
         mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : process.env.MONGO_URL,
       });
 
-      console.log(conn);
       return ({
         headers: event.headers,
         functionName: context.functionName,
