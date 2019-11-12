@@ -5,7 +5,7 @@ export default `
     ida: String!
     type: String
     productor: Productor
-    artists: [Artist]
+    artist: Artist
     likes: [User]
   }
   
@@ -14,7 +14,7 @@ export default `
     ida: String!
     type: String
     productor: String
-    artists: [String]
+    artist: String
     likes: [String]
   }
 `;

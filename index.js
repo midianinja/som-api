@@ -27,7 +27,6 @@ const server = new ApolloServer(
         mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : 'mongodb+srv://gabriel:123admin123@som-bnvm2.mongodb.net/test?retryWrites=true&w=majority',
       });
 
-      console.log(conn);
       return ({
         headers: event.headers,
         functionName: context.functionName,
