@@ -105,7 +105,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/som-api/dev/1566069745184-2019-08-17T19:22:25.184Z/som-api.zip"
+          "S3Key": "serverless/som-api/dev/1573603954607-2019-11-13T00:12:34.607Z/som-api.zip"
         },
         "FunctionName": "som-api-dev-graphql",
         "Handler": "index.graphqlHandler",
@@ -124,14 +124,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "GraphqlLambdaVersion837VMLQH3U0g0DvAwEuaSNzBDCJ2ELbJtTVSY9XJsk": {
+    "GraphqlLambdaVersionk5PT2OvIey3mH9AK5YZRPvZAHmy3yAJO8RiWqNoEQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "GraphqlLambdaFunction"
         },
-        "CodeSha256": "nDY7wmGmQOx+YANVzCBnlY2E3jLXz7jX7LvIHo+h/AA="
+        "CodeSha256": "0GTsIocoDvKuGmdDiepy+bbDmr9ydJieOsmob5lDBow="
       }
     },
     "ApiGatewayRestApi": {
@@ -142,6 +142,21 @@
           "Types": [
             "EDGE"
           ]
+        }
+      }
+    },
+    "ApiGatewayResourceGraphql": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "ApiGatewayRestApi",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "graphql",
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
         }
       }
     },
@@ -160,7 +175,7 @@
         }
       }
     },
-    "ApiGatewayMethodOptions": {
+    "ApiGatewayMethodGraphqlOptions": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
@@ -188,22 +203,19 @@
             {
               "StatusCode": "200",
               "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Origin": "'http://*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Access-Control-Allow-Origin,Origin,Accept'",
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
-                "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                "method.response.header.Access-Control-Allow-Credentials": "'true'"
               },
               "ResponseTemplates": {
-                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\"http://.*\") || $origin.matches(\"https://.*\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
               }
             }
           ]
         },
         "ResourceId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Ref": "ApiGatewayResourceGraphql"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -257,16 +269,13 @@
         }
       }
     },
-    "ApiGatewayMethodPost": {
+    "ApiGatewayMethodGraphqlPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "HttpMethod": "POST",
         "RequestParameters": {},
         "ResourceId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
+          "Ref": "ApiGatewayResourceGraphql"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
@@ -346,7 +355,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1566069703034": {
+    "ApiGatewayDeployment1573603914832": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -355,9 +364,9 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodOptions",
+        "ApiGatewayMethodGraphqlOptions",
         "ApiGatewayMethodPlaygroundOptions",
-        "ApiGatewayMethodPost",
+        "ApiGatewayMethodGraphqlPost",
         "ApiGatewayMethodPlaygroundGet"
       ]
     },
@@ -408,7 +417,7 @@
     "GraphqlLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GraphqlLambdaVersion837VMLQH3U0g0DvAwEuaSNzBDCJ2ELbJtTVSY9XJsk"
+        "Ref": "GraphqlLambdaVersionk5PT2OvIey3mH9AK5YZRPvZAHmy3yAJO8RiWqNoEQ"
       }
     },
     "ServiceEndpoint": {

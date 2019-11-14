@@ -42,7 +42,6 @@ const server = new ApolloServer(
         events: conn.model('events'),
         locations: conn.model('locations'),
         songs: conn.model('songs'),
-
       });
     },
   },
