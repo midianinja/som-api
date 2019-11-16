@@ -67,21 +67,18 @@ const update = (parent, args, { artists }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findOne = (parent, args, { artists }) => {
-  const options = sliceArgs(args);
-
-  return artists.findOne(options.query.artist)
-    .populate('user')
-    .populate('approved_events')
-    .populate('subscribed_events')
-    .populate('recused_events')
-    .populate('musical_genres')
-    .populate('category')
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
+const findOne = (parent, args, { artists }) => artists
+  .findOne({ _id: args.id })
+  .populate('user')
+  .populate('approved_events')
+  .populate('subscribed_events')
+  .populate('recused_events')
+  .populate('musical_genres')
+  .populate('category')
+  .then(resp => resp)
+  .catch((err) => {
+    throw new Error(err);
+  });
 
 /**
   * findAll - Essa função procura e retorna vários artistas da base de dados
