@@ -70,7 +70,7 @@ functions:
     events:
      - http:
         method: POST
-        path: /graphql
+        path: /
         cors:
           origins:
             - http://*

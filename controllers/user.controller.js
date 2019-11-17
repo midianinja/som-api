@@ -11,6 +11,7 @@ import { sliceArgs } from '../utils/query.utils';
 const create = (parent, args, { users }) => {
   const validate = {}; // validateUser(); fazer função de validaçã
   if (validate.error) throw new Error(validate.msg);
+  console.log('args: ', args);
 
   return users.create(args.user);
 };
