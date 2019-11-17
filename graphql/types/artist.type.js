@@ -1,4 +1,10 @@
 export default `
+
+  type ArtistFollow {
+    user: User
+    created_at: String
+  }  
+
   type Artist {
     id: ID
     user: String
@@ -17,7 +23,6 @@ export default `
     twitter: String
     youtube: String
 
-    
     hometown: String
     category: CategoryOption
     
@@ -34,6 +39,7 @@ export default `
     spotify_id: String
     facebook_id: String
     email: String
+    follows: [ArtistFollow]
   }
   
   input ArtistInput {

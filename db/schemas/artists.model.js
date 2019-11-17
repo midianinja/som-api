@@ -30,6 +30,10 @@ const artistModel = new Schema({
   tec_rider: { type: String, default: '' },
   kit: { type: String, default: '' },
 
+  follows: [{
+    user: { type: ObjectId, ref: 'users' },
+    created_at: { type: Date, default: Date.now() },
+  }],
   hometown: { type: String, default: '' },
   google_id: { type: String, default: '' },
   twitter_id: { type: String, default: '' },

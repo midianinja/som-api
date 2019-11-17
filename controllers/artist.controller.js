@@ -75,6 +75,7 @@ const findOne = (parent, args, { artists }) => artists
   .populate('recused_events')
   .populate('musical_genres')
   .populate('category')
+  .populate('follows.user')
   .then(resp => resp)
   .catch((err) => {
     throw new Error(err);
@@ -97,6 +98,59 @@ const findAll = (parent, args, { artists }) => {
     .populate('recused_events')
     .populate('musical_genres')
     .populate('category')
+    .populate('follows.user')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+/**
+  * follow - Essa função segue um artist
+  *
+  * @function follow
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const follow = (parent, args, { artists }) => {
+  const { artist, user } = args;
+  return artists.findOneAndUpdate({ _id: artist }, { follows: { user } }, { new: true })
+    .populate('user')
+    .populate('approved_events')
+    .populate('subscribed_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('category')
+    .populate('follows.user')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+/**
+  * unfollow - Essa função deixa de seguir um artist
+  *
+  * @function follow
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const unfollow = (parent, args, { artists }) => {
+  const { artist, user } = args;
+  return artists.findOneAndUpdate(
+    { _id: artist },
+    { $pull: { follows: { $elemMatch: { user } } } },
+    { new: true },
+  )
+    .populate('user')
+    .populate('approved_events')
+    .populate('subscribed_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('category')
+    .populate('follows.user')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -108,4 +162,6 @@ export default {
   findOne,
   findAll,
   update,
+  follow,
+  unfollow,
 };

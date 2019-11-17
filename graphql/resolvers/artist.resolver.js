@@ -8,5 +8,7 @@ export default {
   mutations: {
     createArtist: ArtistController.create,
     updateArtist: ArtistController.update,
+    followArtist: ArtistController.follow,
+    unfollowArtist: ArtistController.unfollow,
   },
 };
