@@ -8,6 +8,9 @@ import user from './user.resolver';
 import database from './database.resolver';
 import event from './event.resolver';
 import song from './song.resolver';
+import country from './country.resolver';
+import state from './state.resolver';
+import city from './city.resolver';
 
 export default {
   Query: {
@@ -20,6 +23,9 @@ export default {
     ...user.queries,
     ...event.queries,
     ...song.queries,
+    ...country.queries,
+    ...state.queries,
+    ...city.queries,
   },
   Mutation: {
     ...acessibilityOption.mutations,
@@ -32,5 +38,8 @@ export default {
     ...database.mutations,
     ...event.mutations,
     ...song.mutations,
+    ...country.mutations,
+    ...state.mutations,
+    ...city.mutations,
   },
 };

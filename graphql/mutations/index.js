@@ -8,6 +8,9 @@ import productorMutation from './productor.mutation';
 import spaceCapacityOptionMutation from './spaceCapacityOption.mutation';
 import userMutation from './user.mutation';
 import songMutation from './song.mutation';
+import countryMutation from './country.mutation';
+import cityMutation from './city.mutation';
+import stateMutation from './state.mutation';
 
 export default `
   type Mutation {
@@ -16,6 +19,9 @@ export default `
     ${musicalStyleOptionMutation}
     ${spaceCapacityOptionMutation}
     ${songMutation}
+    ${countryMutation}
+    ${cityMutation}
+    ${stateMutation}
 
     ${productorMutation}
     ${artistMutation}

@@ -10,6 +10,9 @@ import users from './schemas/users.model';
 import events from './schemas/events.model';
 import locations from './schemas/locations.model';
 import songs from './schemas/songs.model';
+import countries from './schemas/country.model';
+import states from './schemas/state.model';
+import cities from './schemas/city.model';
 
 export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
   try {
@@ -31,6 +34,9 @@ export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
       newConnection.model('events', events);
       newConnection.model('locations', locations);
       newConnection.model('songs', songs);
+      newConnection.model('countries', countries);
+      newConnection.model('states', states);
+      newConnection.model('cities', cities);
       return newConnection;
     }
     console.log('=> using existing database connection');

@@ -9,6 +9,9 @@ import artistQuery from './artist.query';
 import userQuery from './user.query';
 import eventQuery from './event.query';
 import songQuery from './song.query';
+import countryQuery from './country.query';
+import cityQuery from './city.query';
+import stateQuery from './state.query';
 
 export default `
   type Query {
@@ -16,6 +19,9 @@ export default `
     ${categoryOptionQuery}
     ${musicalStyleOptionQuery}
     ${spaceCapacityOptionQuery}
+    ${countryQuery}
+    ${cityQuery}
+    ${stateQuery}
     
     ${productorQuery}
     ${artistQuery}

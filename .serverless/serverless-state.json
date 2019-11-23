@@ -6,7 +6,7 @@
     },
     "provider": {
       "stage": "dev",
-      "variableSyntax": "\\${([ ~:a-zA-Z0-9._@'\",\\-\\/\\(\\)*]+?)}",
+      "variableSyntax": "\\${([ ~:a-zA-Z0-9._@'\",\\-\\/\\(\\)*?]+?)}",
       "name": "aws",
       "runtime": "nodejs8.10",
       "region": "us-west-2",
@@ -24,6 +24,42 @@
                   {
                     "ServerSideEncryptionByDefault": {
                       "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:aws:s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
                     }
                   }
                 ]
@@ -119,7 +155,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/som-api/dev/1573603954607-2019-11-13T00:12:34.607Z/som-api.zip"
+                "S3Key": "serverless/som-api/dev/1573937765807-2019-11-16T20:56:05.807Z/som-api.zip"
               },
               "FunctionName": "som-api-dev-graphql",
               "Handler": "index.graphqlHandler",
@@ -138,14 +174,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GraphqlLambdaVersionk5PT2OvIey3mH9AK5YZRPvZAHmy3yAJO8RiWqNoEQ": {
+          "GraphqlLambdaVersionSOumyZ7uKyiIJIkyoFDngTuW9muS5XJQsOnHVUdg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GraphqlLambdaFunction"
               },
-              "CodeSha256": "0GTsIocoDvKuGmdDiepy+bbDmr9ydJieOsmob5lDBow="
+              "CodeSha256": "dE7tUlYCFjVeneT1218J2v4p4cwxaQBYhYjxTCCK6pI="
             }
           },
           "ApiGatewayRestApi": {
@@ -156,21 +192,6 @@
                 "Types": [
                   "EDGE"
                 ]
-              }
-            }
-          },
-          "ApiGatewayResourceGraphql": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "graphql",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
               }
             }
           },
@@ -189,7 +210,7 @@
               }
             }
           },
-          "ApiGatewayMethodGraphqlOptions": {
+          "ApiGatewayMethodOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -229,7 +250,10 @@
                 ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceGraphql"
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -283,13 +307,16 @@
               }
             }
           },
-          "ApiGatewayMethodGraphqlPost": {
+          "ApiGatewayMethodPost": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "POST",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceGraphql"
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -369,7 +396,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1573603914832": {
+          "ApiGatewayDeployment1573937730824": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -378,9 +405,9 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodGraphqlOptions",
+              "ApiGatewayMethodOptions",
               "ApiGatewayMethodPlaygroundOptions",
-              "ApiGatewayMethodGraphqlPost",
+              "ApiGatewayMethodPost",
               "ApiGatewayMethodPlaygroundGet"
             ]
           },
@@ -431,7 +458,7 @@
           "GraphqlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GraphqlLambdaVersionk5PT2OvIey3mH9AK5YZRPvZAHmy3yAJO8RiWqNoEQ"
+              "Ref": "GraphqlLambdaVersionSOumyZ7uKyiIJIkyoFDngTuW9muS5XJQsOnHVUdg"
             }
           },
           "ServiceEndpoint": {
@@ -476,6 +503,42 @@
                 ]
               }
             }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:aws:s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
           }
         },
         "Outputs": {
@@ -506,7 +569,7 @@
           {
             "http": {
               "method": "post",
-              "path": "graphql",
+              "path": "",
               "cors": {
                 "origins": [
                   "http://*",
@@ -568,7 +631,7 @@
     "layers": {}
   },
   "package": {
-    "artifactDirectoryName": "serverless/som-api/dev/1573603954607-2019-11-13T00:12:34.607Z",
+    "artifactDirectoryName": "serverless/som-api/dev/1573937765807-2019-11-16T20:56:05.807Z",
     "artifact": ""
   }
 }
