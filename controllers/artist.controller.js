@@ -13,6 +13,7 @@ const create = async (parent, args, { artists, users }) => {
   if (validate.error) throw new Error(validate.msg);
 
   // Craete artist in the database
+  console.log('args.artist:', args.artist);
   const artist = await artists.create(args.artist)
     .then(async resp => resp.populate('user')
       // .populate('approved_events')
@@ -25,7 +26,8 @@ const create = async (parent, args, { artists, users }) => {
     .catch((err) => {
       throw new Error(err);
     });
-
+    
+  console.log('artist:', artist);
   await users.findOneAndUpdate(
     { _id: artist.user._id },
     { artist: artist._id },
@@ -46,6 +48,7 @@ const create = async (parent, args, { artists, users }) => {
 const update = (parent, args, { artists }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
+  console.log('args:', args);
 
   return artists.findOneAndUpdate({ _id: args.artist_id }, args.artist, { new: true })
     // .populate('approved_events')
