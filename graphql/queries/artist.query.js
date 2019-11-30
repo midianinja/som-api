@@ -1,6 +1,6 @@
 export default `
   oneArtist( 
-    artist: ArtistInput
+    id: ID!
   ): Artist
 
   allArtists( 
