@@ -17,15 +17,12 @@ export default `
     state: String
     city: String
     musical_styles: [MusicalStyleOption]
-
     facebook: String
     instagram: String
     twitter: String
     youtube: String
-
     hometown: String
     category: CategoryOption
-    
     songs: [Song]
     approved_events: [Event]
     subscribed_events: [Event]

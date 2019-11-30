@@ -155,7 +155,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/som-api/dev/1573937765807-2019-11-16T20:56:05.807Z/som-api.zip"
+                "S3Key": "serverless/som-api/dev/1574816631361-2019-11-27T01:03:51.361Z/som-api.zip"
               },
               "FunctionName": "som-api-dev-graphql",
               "Handler": "index.graphqlHandler",
@@ -174,14 +174,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "GraphqlLambdaVersionSOumyZ7uKyiIJIkyoFDngTuW9muS5XJQsOnHVUdg": {
+          "GraphqlLambdaVersionHSRxo9FDbh0Jn4PyCUasuImRLAwcsJ4nTowdlEUCss": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GraphqlLambdaFunction"
               },
-              "CodeSha256": "dE7tUlYCFjVeneT1218J2v4p4cwxaQBYhYjxTCCK6pI="
+              "CodeSha256": "ZcHSykteYlkfB5s0sIGGwfEU58SFBZW1ufllOIYUhLk="
             }
           },
           "ApiGatewayRestApi": {
@@ -396,7 +396,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1573937730824": {
+          "ApiGatewayDeployment1574816605839": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -458,7 +458,7 @@
           "GraphqlLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GraphqlLambdaVersionSOumyZ7uKyiIJIkyoFDngTuW9muS5XJQsOnHVUdg"
+              "Ref": "GraphqlLambdaVersionHSRxo9FDbh0Jn4PyCUasuImRLAwcsJ4nTowdlEUCss"
             }
           },
           "ServiceEndpoint": {
@@ -631,7 +631,7 @@
     "layers": {}
   },
   "package": {
-    "artifactDirectoryName": "serverless/som-api/dev/1573937765807-2019-11-16T20:56:05.807Z",
+    "artifactDirectoryName": "serverless/som-api/dev/1574816631361-2019-11-27T01:03:51.361Z",
     "artifact": ""
   }
 }

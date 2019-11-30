@@ -29,7 +29,7 @@ const update = (parent, args, { users }) => {
   if (validate.error) throw new Error(validate.msg);
 
   return users.findOneAndUpdate({ _id: args.user_id }, args.user, { new: true })
-    .populate('artists');
+    .populate('artist');
 };
 
 /**
@@ -44,7 +44,7 @@ const findOne = (parent, args, { users }) => {
   const options = sliceArgs(args);
 
   return users.findOne(options.query)
-    .populate('artists');
+    .populate('artist');
 };
 
 /**
@@ -58,7 +58,7 @@ const findOne = (parent, args, { users }) => {
 const findAll = (parent, args, { users }) => {
   const options = sliceArgs(args);
   return users.find(options.query)
-    .populate('artists');
+    .populate('artist');
 };
 
 export default {
