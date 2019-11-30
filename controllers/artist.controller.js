@@ -105,7 +105,6 @@ const findAll = (parent, args, { artists }) => {
     });
 };
 
-<<<<<<< Updated upstream
 /**
   * follow - Essa função segue um artist
   *
@@ -117,9 +116,6 @@ const findAll = (parent, args, { artists }) => {
 const follow = (parent, args, { artists }) => {
   const { artist, user } = args;
   return artists.findOneAndUpdate({ _id: artist }, { follows: { user } }, { new: true })
-=======
-  return artists.findOne({ _id: options.query.artist.id })
->>>>>>> Stashed changes
     .populate('user')
     .populate('approved_events')
     .populate('subscribed_events')
