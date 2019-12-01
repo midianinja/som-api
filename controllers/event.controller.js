@@ -119,7 +119,7 @@ const findAll = (parent, args, { events }) => {
   */
 const subscribe = (parent, args, { events }) => {
   const { id, artistID } = args;
-  return events.findOneAndUpdate({ _id: id }, { subscribers: artistID }, { new: true });
+  return events.findOneAndUpdate({ _id: id }, { $push: { subscribers: artistID } }, { new: true });
 };
 
 /**
