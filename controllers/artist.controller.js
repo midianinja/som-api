@@ -26,7 +26,7 @@ const create = async (parent, args, { artists, users }) => {
     .catch((err) => {
       throw new Error(err);
     });
-    
+
   console.log('artist:', artist);
   await users.findOneAndUpdate(
     { _id: artist.user._id },

@@ -34,6 +34,7 @@ export default `
     twitter_id: String
     instagram_id: String
     spotify_id: String
+    spotify_artist_link: String
     facebook_id: String
     email: String
     follows: [ArtistFollow]
@@ -49,6 +50,7 @@ export default `
     about: String
     country: String
     stage_map: String
+    spotify_artist_link: String
     tec_rider: String
     kit: String
     state: String

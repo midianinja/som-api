@@ -39,6 +39,7 @@ const artistModel = new Schema({
   twitter_id: { type: String, default: '' },
   instagram_id: { type: String, default: '' },
   spotify_id: { type: String, default: '' },
+  spotify_artist_link: { type: String, default: '' },
   facebook_id: { type: String, default: '' },
   approved_events: [{ type: ObjectId, ref: 'events' }],
   songs: [{ type: ObjectId, ref: 'songs' }],
