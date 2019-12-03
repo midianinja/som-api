@@ -24,7 +24,7 @@ const server = new ApolloServer(
     context: async ({ event, context }) => {
       conn = await MongoDB({
         conn,
-        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : 'mongodb+srv://som:ZyzdIdWWHvZIjmJB@cluster0-qqrtz.mongodb.net/som?retryWrites=true&w=majority',
+        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : process.env.MONGO_URL,
       });
 
       return ({
