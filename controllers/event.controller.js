@@ -117,9 +117,25 @@ const findAll = (parent, args, { events }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const subscribe = (parent, args, { events }) => {
+const subscribe = async (parent, args, { events }) => {
   const { id, artistID } = args;
-  return events.findOneAndUpdate({ _id: id }, { $push: { subscribers: artistID } }, { new: true });
+  const event = await events.findOne(
+    { _id: id },
+  );
+  const myEvent = JSON.parse(JSON.stringify(event));
+  const subscribers = myEvent.subscribers.filter(sbs => sbs !== artistID);
+  console.log('subscribers:', subscribers);
+  subscribers.push(artistID);
+  return events.findOneAndUpdate({ _id: id }, { subscribers }, { new: true })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers');
 };
 
 /**
@@ -134,7 +150,16 @@ const unsubscribe = (parent, args, { events }) => {
   const { id, artistID } = args;
   return events.findOneAndUpdate({ _id: id }, {
     $pull: { subscribers: artistID },
-  }, { new: true });
+  }, { new: true })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers');
 };
 
 export default {

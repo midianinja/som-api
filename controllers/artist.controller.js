@@ -77,6 +77,7 @@ const findOne = (parent, args, { artists }) => artists
   .populate('subscribed_events')
   .populate('recused_events')
   .populate('musical_genres')
+  .populate('musical_styles')
   .populate('category')
   .populate('follows.user')
   .then(resp => resp)
@@ -94,12 +95,14 @@ const findOne = (parent, args, { artists }) => artists
   */
 const findAll = (parent, args, { artists }) => {
   const options = sliceArgs(args);
+  console.log('args:', args);
   return artists.find(options.query.artist)
     .populate('user')
     .populate('approved_events')
     .populate('subscribed_events')
     .populate('recused_events')
     .populate('musical_genres')
+    .populate('musical_styles')
     .populate('category')
     .populate('follows.user')
     .then(resp => resp)
@@ -123,6 +126,7 @@ const follow = (parent, args, { artists }) => {
     .populate('approved_events')
     .populate('subscribed_events')
     .populate('recused_events')
+    .populate('musical_styles')
     .populate('musical_genres')
     .populate('category')
     .populate('follows.user')
@@ -151,6 +155,7 @@ const unfollow = (parent, args, { artists }) => {
     .populate('approved_events')
     .populate('subscribed_events')
     .populate('recused_events')
+    .populate('musical_styles')
     .populate('musical_genres')
     .populate('category')
     .populate('follows.user')

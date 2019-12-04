@@ -44,7 +44,19 @@ const findOne = (parent, args, { users }) => {
   const options = sliceArgs(args);
 
   return users.findOne(options.query)
-    .populate('artist');
+    .populate({
+      path: 'artist',
+      populate: [
+        { path: 'user' },
+        { path: 'approved_events' },
+        { path: 'subscribed_events' },
+        { path: 'recused_events' },
+        { path: 'musical_genres' },
+        { path: 'musical_styles' },
+        { path: 'category' },
+        { path: 'follows.user' },
+      ],
+    });
 };
 
 /**
@@ -58,7 +70,19 @@ const findOne = (parent, args, { users }) => {
 const findAll = (parent, args, { users }) => {
   const options = sliceArgs(args);
   return users.find(options.query)
-    .populate('artist');
+    .populate({
+      path: 'artist',
+      populate: [
+        { path: 'user' },
+        { path: 'approved_events' },
+        { path: 'subscribed_events' },
+        { path: 'recused_events' },
+        { path: 'musical_genres' },
+        { path: 'musical_styles' },
+        { path: 'category' },
+        { path: 'follows.user' },
+      ],
+    });
 };
 
 export default {
