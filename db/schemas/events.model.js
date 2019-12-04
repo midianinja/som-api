@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 
 const { ObjectId } = Schema.Types;
 const defaultEventDate = +new Date() + 30 * 24 * 60 * 60 * 1000;
+const defaultClosingDate = +new Date() + 29 * 24 * 60 * 60 * 1000;
 const eventsModel = new Schema({
   productor: { type: ObjectId, ref: 'productors' },
   approved_artists: [{ type: ObjectId, ref: 'artists' }],
@@ -14,6 +15,7 @@ const eventsModel = new Schema({
   site: { type: String, default: '' },
   oportunities: { type: String, default: '' },
   event_date: { type: Date, default: defaultEventDate },
+  subscribe_closing_date: { type: Date, default: defaultClosingDate },
   has_accommodation: { type: Boolean, default: false },
   has_food: { type: Boolean, default: false },
   has_local_transportation: { type: Boolean, default: false },

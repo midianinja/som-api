@@ -13,6 +13,7 @@ export default `
     site: String
     oportunities: Int
     event_date: String
+    subscribe_closing_date: String
     
     has_accommodation: Boolean
     has_food: Boolean
@@ -34,6 +35,7 @@ export default `
     cover: String
     oportunities: Int
     event_date: String
+    subscribe_closing_date: String
     
     has_accommodation: Boolean
     has_food: Boolean
