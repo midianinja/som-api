@@ -24,11 +24,11 @@ const server = new ApolloServer(
     context: async ({ event, context }) => {
       const myEnv = event.stageVariables || {
         MONGO_URL: process.env.MONGO_URL,
+        DATABASE_NAME: process.env.DATABASE_NAME,
       };
-      console.log('myEnv:', myEnv);
       conn = await MongoDB({
         conn,
-        mongoUrl: `mongodb+${myEnv.MONGO_URL}`,
+        mongoUrl: `mongodb+${myEnv.MONGO_URL.replace('_DATABASE_', myEnv.DATABASE_NAME)}`,
       });
 
       return ({

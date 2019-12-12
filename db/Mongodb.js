@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
 
 import acessibilityOptions from './schemas/acessibilityOptions.model';
@@ -15,6 +16,7 @@ import states from './schemas/state.model';
 import cities from './schemas/city.model';
 
 export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
+  console.log('mongoUrl:', mongoUrl);
   try {
     if (!conn) {
       console.log('=> using new database connection');
