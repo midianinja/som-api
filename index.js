@@ -22,9 +22,13 @@ const server = new ApolloServer(
     },
     path: '/graphql',
     context: async ({ event, context }) => {
+      const myEnv = event.stageVariables || {
+        MONGO_URL: process.env.MONGO_URL,
+      };
+      console.log('myEnv:', myEnv);
       conn = await MongoDB({
         conn,
-        mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : process.env.MONGO_URL,
+        mongoUrl: `mongodb+${myEnv.MONGO_URL}`,
       });
 
       return ({

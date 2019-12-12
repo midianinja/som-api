@@ -86,6 +86,33 @@ const findOne = (parent, args, { artists }) => artists
   });
 
 /**
+  * searchArtists - Essa função procura e retorna vários artistas da base de dados
+  *
+  * @function searchArtists
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const searchArtists = (parent, args, { artists }) => {
+  console.log('args:', args);
+  return artists.find(args.artist)
+    .skip(args.paginator.skip)
+    .limit(args.paginator.limit)
+    .populate('user')
+    .populate('approved_events')
+    .populate('subscribed_events')
+    .populate('recused_events')
+    .populate('musical_genres')
+    .populate('musical_styles')
+    .populate('category')
+    .populate('follows.user')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
+};
+
+/**
   * findAll - Essa função procura e retorna vários artistas da base de dados
   *
   * @function findAll
@@ -170,6 +197,7 @@ export default {
   findOne,
   findAll,
   update,
+  searchArtists,
   follow,
   unfollow,
 };

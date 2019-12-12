@@ -12,7 +12,7 @@
     "global": "^4.3.2",
     "graphql": "^14.1.1",
     "graphql-type-json": "^0.2.1",
-    "mongoose": "^5.4.16",
+    "mongoose": "^5.7.5",
     "serverless-http": "^1.9.1",
     "validator": "^10.11.0"
   },

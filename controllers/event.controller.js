@@ -117,15 +117,15 @@ const findAll = (parent, args, { events }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const subscribe = async (parent, args, { events }) => {
+const subscribe = async (parent, args, { events, artists }) => {
   const { id, artistID } = args;
-  const event = await events.findOne(
-    { _id: id },
-  );
+  const event = await events.findOne({ _id: id });
   const myEvent = JSON.parse(JSON.stringify(event));
   const subscribers = myEvent.subscribers.filter(sbs => sbs !== artistID);
-  console.log('subscribers:', subscribers);
   subscribers.push(artistID);
+
+  await artists.findOneAndUpdate({ _id: artistID }, { $push: { subscribed_events: id } });
+
   return events.findOneAndUpdate({ _id: id }, { subscribers }, { new: true })
     .populate('approved_artists')
     .populate({
@@ -146,8 +146,9 @@ const subscribe = async (parent, args, { events }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const unsubscribe = (parent, args, { events }) => {
+const unsubscribe = async (parent, args, { events, artists }) => {
   const { id, artistID } = args;
+  await artists.findOneAndUpdate({ _id: artistID }, { $pull: { subscribed_events: id } });
   return events.findOneAndUpdate({ _id: id }, {
     $pull: { subscribers: artistID },
   }, { new: true })
