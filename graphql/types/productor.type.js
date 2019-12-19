@@ -4,22 +4,30 @@ export default `
     user: User
     photo: String
     name: String
+    cpf: String
+    cnpj: String
     description: String
     location: Location
     followers: [User]
     following: [Artist]
+    musical_styles: [MusicalStyleOption]
     events: [Event]
+    status: String
   }
 
   input ProductorInput {
-    id: ID
-    photo: String
-    user: ID
-    name: String
     description: String
-    location: ID
+    events: [ID]
+    cpf: String
+    cnpj: String
     followers: [ID]
     following: [ID]
-    events: [ID]
+    id: ID
+    location: ID
+    musical_styles: [String]
+    name: String
+    photo: String
+    user: ID
+    status: String
   }
 `;
