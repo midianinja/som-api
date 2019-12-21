@@ -13,6 +13,15 @@ export default `
     musical_styles: [MusicalStyleOption]
     events: [Event]
     status: String
+    main_phone: String
+    secondary_phone: String
+    whatsapp: String
+    telegram: String
+    contact_email: String
+    facebook: String
+    twitter: String
+    instagram: String
+    youtube: String
   }
 
   input ProductorInput {
@@ -29,5 +38,14 @@ export default `
     photo: String
     user: ID
     status: String
+    main_phone: String
+    secondary_phone: String
+    whatsapp: String
+    telegram: String
+    contact_email: String
+    facebook: String
+    twitter: String
+    instagram: String
+    youtube: String
   }
 `;
