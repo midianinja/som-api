@@ -8,17 +8,25 @@ import { sliceArgs } from '../utils/query.utils';
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { productors }) => {
+const create = async (parent, args, { productors, users }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return productors.create(args.productor)
+  const productor = await productors.create(args.productor)
     .then(resp => resp
       .populate('user')
       .populate('events'))
     .catch((err) => {
       throw new Error(err);
     });
+
+  await users.update(
+    { _id: productor.user._id },
+    { productor: productor._id },
+    { new: true },
+  );
+
+  return productor;
 };
 
 /**

@@ -29,7 +29,13 @@ const update = (parent, args, { users }) => {
   if (validate.error) throw new Error(validate.msg);
 
   return users.findOneAndUpdate({ _id: args.user_id }, args.user, { new: true })
-    .populate('artist');
+    .populate('artist')
+    .populate('productor')
+    .populate('productor.musical_styles')
+    .populate({
+      path: 'productor',
+      populate: ['musical_styles'],
+    });
 };
 
 /**
