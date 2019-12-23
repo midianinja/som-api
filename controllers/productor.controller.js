@@ -15,7 +15,9 @@ const create = async (parent, args, { productors, users }) => {
   const productor = await productors.create(args.productor)
     .then(resp => resp
       .populate('user')
-      .populate('events'))
+      .populate('events')
+      .populate('musical_styles')
+      .populate('location'))
     .catch((err) => {
       throw new Error(err);
     });
@@ -44,6 +46,8 @@ const update = (parent, args, { productors }) => {
   return productors.findOneAndUpdate({ _id: args.productor_id }, args.productor, { new: true })
     .populate('user')
     .populate('events')
+    .populate('musical_styles')
+    .populate('location')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -64,6 +68,8 @@ const findOne = (parent, args, { productors }) => {
   return productors.findOne(options.query.productor)
     .populate('user')
     .populate('events')
+    .populate('musical_styles')
+    .populate('location')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -83,6 +89,8 @@ const findAll = (parent, args, { productors }) => {
   return productors.find(options.query.productor)
     .populate('user')
     .populate('events')
+    .populate('musical_styles')
+    .populate('location')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);

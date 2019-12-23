@@ -8,19 +8,20 @@ export default `
     number: String
     zipcode: String
     state: String
+    country: String
     place_id: String
     geometry: JSON
   }
   
   input LocationInput {
-    id: ID
-    address: String!
+    address: String
     complement: String
     district: String
-    city: String!
+    city: String
+    country: String
     number: String
-    zipcode: String!
-    state: String!
+    zipcode: String
+    state: String
     place_id: String
     geometry: JSON
   }

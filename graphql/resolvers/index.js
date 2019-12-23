@@ -11,6 +11,7 @@ import song from './song.resolver';
 import country from './country.resolver';
 import state from './state.resolver';
 import city from './city.resolver';
+import location from './location.resolver';
 
 export default {
   Query: {
@@ -41,5 +42,6 @@ export default {
     ...country.mutations,
     ...state.mutations,
     ...city.mutations,
+    ...location.mutations,
   },
 };
