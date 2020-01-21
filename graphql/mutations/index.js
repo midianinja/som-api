@@ -11,6 +11,7 @@ import songMutation from './song.mutation';
 import countryMutation from './country.mutation';
 import cityMutation from './city.mutation';
 import stateMutation from './state.mutation';
+import locationMutation from './location.mutation';
 
 export default `
   type Mutation {
@@ -22,7 +23,7 @@ export default `
     ${countryMutation}
     ${cityMutation}
     ${stateMutation}
-
+    ${locationMutation}
     ${productorMutation}
     ${artistMutation}
     ${userMutation}

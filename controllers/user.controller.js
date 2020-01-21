@@ -34,7 +34,7 @@ const update = (parent, args, { users }) => {
     .populate('productor.musical_styles')
     .populate({
       path: 'productor',
-      populate: ['musical_styles'],
+      populate: ['musical_styles', 'location'],
     });
 };
 
