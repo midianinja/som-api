@@ -3,15 +3,15 @@ export default `
     event: EventInput!
   ): Event
   updateEvent(
-    id: ID!
+    id: String!
     event: EventInput!
   ): Event
   subscribeEvent(
-    id: ID!,
-    artistID: ID!,
+    id: String!,
+    artistID: String!,
   ): Event
   unsubscribeEvent(
-    id: ID!,
-    artistID: ID!,
+    id: String!,
+    artistID: String!,
   ): Event
 `;

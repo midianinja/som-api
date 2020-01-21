@@ -119,7 +119,20 @@ const findAll = (parent, args, { events }) => {
   */
 const subscribe = (parent, args, { events }) => {
   const { id, artistID } = args;
-  return events.findOneAndUpdate({ _id: id }, { $push: { subscribers: artistID } }, { new: true });
+  return events.findOneAndUpdate({ _id: id }, { $push: { subscribers: artistID } }, { new: true })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
 
 /**
@@ -134,7 +147,20 @@ const unsubscribe = (parent, args, { events }) => {
   const { id, artistID } = args;
   return events.findOneAndUpdate({ _id: id }, {
     $pull: { subscribers: artistID },
-  }, { new: true });
+  }, { new: true })
+    .populate('approved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers')
+    .then(resp => resp)
+    .catch((err) => {
+      throw new Error(err);
+    });
 };
 
 export default {
