@@ -20,6 +20,8 @@ export default `
     has_local_transportation: Boolean
     has_city_transportation: Boolean
     has_money_paid: Boolean
+    has_interstate_transportation: Boolean
+    has_international_transportation: Boolean
   }
   
   input EventInput {
@@ -42,5 +44,7 @@ export default `
     has_local_transportation: Boolean
     has_city_transportation: Boolean
     has_money_paid: Boolean
+    has_interstate_transportation: Boolean
+    has_international_transportation: Boolean
   }
 `;

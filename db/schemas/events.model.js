@@ -20,6 +20,8 @@ const eventsModel = new Schema({
   has_food: { type: Boolean, default: false },
   has_local_transportation: { type: Boolean, default: false },
   has_city_transportation: { type: Boolean, default: false },
+  has_interstate_transportation: { type: Boolean, default: false },
+  has_international_transportation: { type: Boolean, default: false },
   has_money_paid: { type: Boolean, default: false },
   musical_genres: [{ type: ObjectId, ref: 'musical_genres' }],
 }, {
