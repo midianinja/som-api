@@ -15,6 +15,7 @@ const eventsModel = new Schema({
   site: { type: String, default: '' },
   oportunities: { type: String, default: '' },
   event_date: { type: Date, default: defaultEventDate },
+  end_event_date: { type: Date, default: defaultEventDate },
   subscribe_closing_date: { type: Date, default: defaultClosingDate },
   has_accommodation: { type: Boolean, default: false },
   has_food: { type: Boolean, default: false },

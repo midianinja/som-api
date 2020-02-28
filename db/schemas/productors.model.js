@@ -9,7 +9,7 @@ const productModel = Schema({
   cpf: { type: String, defualt: '' },
   cnpj: { type: String, defualt: '' },
   description: { type: String, default: '' },
-  stauts: { type: String, default: 'INCOMPLETE' },
+  status: { type: String, default: 'INCOMPLETE' },
   location: { type: ObjectId, ref: 'locations' },
   followers: [{ type: ObjectId, ref: 'users' }],
   following: [{ type: ObjectId, ref: 'artists' }],

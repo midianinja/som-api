@@ -62,6 +62,12 @@ const findOne = (parent, args, { users }) => {
         { path: 'category' },
         { path: 'follows.user' },
       ],
+    })
+    .populate('productor')
+    .populate('productor.musical_styles')
+    .populate({
+      path: 'productor',
+      populate: ['musical_styles', 'location'],
     });
 };
 
@@ -88,6 +94,12 @@ const findAll = (parent, args, { users }) => {
         { path: 'category' },
         { path: 'follows.user' },
       ],
+    })
+    .populate('productor')
+    .populate('productor.musical_styles')
+    .populate({
+      path: 'productor',
+      populate: ['musical_styles', 'location'],
     });
 };
 
