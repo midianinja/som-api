@@ -17,7 +17,8 @@ const create = async (parent, args, { productors, users }) => {
       .populate('user')
       .populate('events')
       .populate('musical_styles')
-      .populate('location'))
+      .populate('location')
+      .execPopulate())
     .catch((err) => {
       throw new Error(err);
     });

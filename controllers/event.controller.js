@@ -22,7 +22,8 @@ const create = (parent, args, { events }) => {
         },
       })
       .populate('location')
-      .populate('subscribers'))
+      .populate('subscribers')
+      .execPopulate())
     .catch((err) => {
       throw new Error(err);
     });
