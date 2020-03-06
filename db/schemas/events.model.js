@@ -10,8 +10,16 @@ const eventsModel = new Schema({
   location: { type: ObjectId, ref: 'locations' },
   name: { type: String, default: '' },
   about: { type: String, default: '' },
-  photo: { type: String, default: '' },
-  cover: { type: String, default: '' },
+  photo: {
+    mimified: { type: String, default: '' },
+    original: { type: String, default: '' },
+    thumbnail: { type: String, default: '' },
+  },
+  cover: {
+    mimified: { type: String, default: '' },
+    original: { type: String, default: '' },
+    thumbnail: { type: String, default: '' },
+  },
   site: { type: String, default: '' },
   oportunities: { type: String, default: '' },
   event_date: { type: Date, default: defaultEventDate },

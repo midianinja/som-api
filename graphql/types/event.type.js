@@ -8,8 +8,8 @@ export default `
     about: String
     
     name: String
-    cover: String
-    photo: String
+    cover: Image
+    photo: Image
     site: String
     oportunities: Int
     event_date: String
@@ -34,8 +34,8 @@ export default `
     name: String
     about: String
     site: String
-    photo: String
-    cover: String
+    photo: Image
+    cover: Image
     oportunities: Int
     event_date: String
     end_event_date: String
