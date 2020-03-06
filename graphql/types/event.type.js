@@ -34,8 +34,8 @@ export default `
     name: String
     about: String
     site: String
-    photo: Image
-    cover: Image
+    photo: ImageInput
+    cover: ImageInput
     oportunities: Int
     event_date: String
     end_event_date: String
