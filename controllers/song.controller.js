@@ -65,11 +65,12 @@ const deleteSong = async (parent, args, { songs, artists }) => {
     { new: true },
   );
 
-  const artist = await artists.findOneAndUpdate(
+  await artists.findOneAndUpdate(
     { _id: song.artist },
     { $pull: { songs: args.song_id } },
     { new: true },
   );
+  return {};
 };
 
 /**
