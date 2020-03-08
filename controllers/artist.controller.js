@@ -12,29 +12,31 @@ const create = async (parent, args, { artists, users }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  // Craete artist in the database
-  console.log('args.artist:', args.artist);
-  const artist = await artists.create(args.artist)
-    .then(async resp => resp.populate('user')
-      // .populate('approved_events')
-      // .populate('subscribed_events')
-      // .populate('recused_events')
-      // .populate('category')
-      .populate('musical_styles')
-      .populate('songs')
-      .execPopulate())
-    .catch((err) => {
-      throw new Error(err);
-    });
-
-  console.log('artist:', artist);
-  await users.findOneAndUpdate(
-    { _id: artist.user._id },
-    { artist: artist._id },
-    { new: true },
-  );
-
-  return artist;
+  try {
+    // Craete artist in the database
+    const artist = await artists.create(args.artist)
+      .then(async resp => resp.populate('user')
+        // .populate('approved_events')
+        // .populate('subscribed_events')
+        // .populate('recused_events')
+        // .populate('category')
+        .populate('musical_styles')
+        .populate('songs')
+        .populate('user')
+        .execPopulate())
+      .catch((err) => {
+        throw new Error(err);
+      });
+    await users.findOneAndUpdate(
+      { _id: artist.user._id },
+      { artist: artist._id },
+      { new: true },
+    );
+    return artist;
+  } catch (err) {
+    console.log('err:', err);
+    throw err;
+  }
 };
 
 /**
@@ -48,7 +50,6 @@ const create = async (parent, args, { artists, users }) => {
 const update = (parent, args, { artists }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
-  console.log('args:', args);
 
   return artists.findOneAndUpdate({ _id: args.artist_id }, args.artist, { new: true })
     // .populate('approved_events')
@@ -93,24 +94,21 @@ const findOne = (parent, args, { artists }) => artists
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const searchArtists = (parent, args, { artists }) => {
-  console.log('args:', args);
-  return artists.find(args.artist)
-    .skip(args.paginator.skip)
-    .limit(args.paginator.limit)
-    .populate('user')
-    .populate('approved_events')
-    .populate('subscribed_events')
-    .populate('recused_events')
-    .populate('musical_genres')
-    .populate('musical_styles')
-    .populate('category')
-    .populate('follows.user')
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
+const searchArtists = (parent, args, { artists }) => artists.find(args.artist)
+  .skip(args.paginator.skip)
+  .limit(args.paginator.limit)
+  .populate('user')
+  .populate('approved_events')
+  .populate('subscribed_events')
+  .populate('recused_events')
+  .populate('musical_genres')
+  .populate('musical_styles')
+  .populate('category')
+  .populate('follows.user')
+  .then(resp => resp)
+  .catch((err) => {
+    throw new Error(err);
+  });
 
 /**
   * findAll - Essa função procura e retorna vários artistas da base de dados
@@ -122,7 +120,6 @@ const searchArtists = (parent, args, { artists }) => {
   */
 const findAll = (parent, args, { artists }) => {
   const options = sliceArgs(args);
-  console.log('args:', args);
   return artists.find(options.query.artist)
     .populate('user')
     .populate('approved_events')
