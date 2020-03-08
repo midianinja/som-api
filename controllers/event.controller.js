@@ -8,11 +8,11 @@ import { sliceArgs } from '../utils/query.utils';
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { events }) => {
+const create = async (parent, args, { events, productors }) => {
   const validate = {}; // validateEvent(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return events.create(args.event)
+  const event = await events.create(args.event)
     .then(resp => resp
       .populate('approved_artists')
       .populate({
@@ -23,10 +23,13 @@ const create = (parent, args, { events }) => {
       })
       .populate('location')
       .populate('subscribers')
-      .execPopulate())
-    .catch((err) => {
-      throw new Error(err);
-    });
+      .execPopulate());
+  await productors.findOneAndUpdate(
+    { _id: event.productor._id },
+    { $push: { events: event._id } },
+  );
+
+  return event;
 };
 
 /**
@@ -111,6 +114,63 @@ const findAll = (parent, args, { events }) => {
 };
 
 /**
+  * search - Essa função procura e retorna vários eventos da base de dados
+  *
+  * @function search
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const search = async (parent, args, {
+  events,
+  artists,
+  productors,
+  locations,
+}) => {
+  const agregate = [];
+  const firstMatch = {
+    ...args.event,
+  };
+  if (args.musical_styles && args.musical_styles.length) {
+    firstMatch.musical_styles = { $in: args.musical_styles };
+  }
+
+  const addFields = {
+    event_month: { $month: '$event_date' },
+    event_year: { $year: '$event_date' },
+  };
+
+  const secondMatch = {};
+
+  if (args.years.length) {
+    secondMatch.event_year = { $in: args.years };
+  }
+
+  if (args.months.length) {
+    secondMatch.event_month = { $in: args.months };
+  }
+
+  agregate.push({ $match: firstMatch });
+  agregate.push({ $addFields: addFields });
+
+  if (Object.keys(secondMatch).length) agregate.push({ $match: secondMatch });
+
+  if (args.paginator.sort) agregate.push({ $sort: args.paginator.sort });
+
+  const myEvents = await events.aggregate(agregate)
+    .skip(args.paginator.skip || 0)
+    .limit(args.paginator.limit || 25);
+
+  await artists.populate(myEvents, { path: 'approved_artists' });
+  await productors.populate(myEvents, { path: 'productor', populate: { path: 'location' } });
+  await locations.populate(myEvents, { path: 'location' });
+  await artists.populate(myEvents, { path: 'subscribers' });
+
+
+  return myEvents.map(evt => ({ ...evt, id: evt._id })) || [];
+};
+
+/**
   * subscribe - Essa função adiciona artista aos inscritos
   *
   * @function subscribe
@@ -171,4 +231,5 @@ export default {
   update,
   unsubscribe,
   subscribe,
+  search,
 };

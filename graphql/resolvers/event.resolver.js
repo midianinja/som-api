@@ -4,6 +4,7 @@ export default {
   queries: {
     oneEvent: EventController.findOne,
     allEvents: EventController.findAll,
+    searchEvents: EventController.search,
   },
   mutations: {
     createEvent: EventController.create,

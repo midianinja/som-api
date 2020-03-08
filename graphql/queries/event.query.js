@@ -7,4 +7,12 @@ export default `
     event: EventInput
     paginator: PaginatorInput
   ): [Event]
+  
+  searchEvents(
+    musical_styles: [ID]
+    years: [Int]
+    months: [Int]
+    event: EventInput
+    paginator: PaginatorInput
+  ): [Event]
 `;
