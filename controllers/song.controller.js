@@ -8,15 +8,21 @@ import { sliceArgs } from '../utils/query.utils';
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const create = (parent, args, { songs }) => {
+const create = async (parent, args, { songs, artists }) => {
   const validate = {}; // validateAcessibilityOption(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
-  return songs.create(args.song)
+  const song = await songs.create(args.song)
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
     });
+
+  await artists.findOneAndUpdate(
+    { _id: args.song.artist },
+    { $push: { songs: song._id } },
+  );
+  return song;
 };
 
 /**
@@ -41,6 +47,30 @@ const update = (parent, args, { songs }) => {
       throw new Error(err);
     });
 };
+/**
+  * deleteSong - Essa função deleta uma musica.
+  *
+  * @function update
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const deleteSong = async (parent, args, { songs, artists }) => {
+  const validate = {}; // validateAcessibilityOption(); fazer função de validação
+  if (validate.error) throw new Error(validate.msg);
+
+  const song = await songs.findOneAndUpdate(
+    { _id: args.song_id },
+    { deleted: true },
+    { new: true },
+  );
+
+  const artist = await artists.findOneAndUpdate(
+    { _id: song.artist },
+    { $pull: { songs: args.song_id } },
+    { new: true },
+  );
+};
 
 /**
   * findOne - Essa função procura e returna uma opção de acessibilidade.
@@ -53,7 +83,7 @@ const update = (parent, args, { songs }) => {
 const findOne = (parent, args, { songs }) => {
   const options = sliceArgs(args);
 
-  return songs.findOne(options.query)
+  return songs.findOne({ ...options.query, deleted: false })
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -70,7 +100,7 @@ const findOne = (parent, args, { songs }) => {
   */
 const findAll = (parent, args, { songs }) => {
   const options = sliceArgs(args);
-  return songs.find(options.query.song)
+  return songs.find({ ...options.query.song, deleted: false })
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -82,4 +112,5 @@ export default {
   findOne,
   findAll,
   update,
+  deleteSong,
 };

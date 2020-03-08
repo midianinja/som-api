@@ -8,5 +8,6 @@ export default {
   mutations: {
     createSong: SongController.create,
     updateSong: SongController.update,
+    deleteSong: SongController.deleteSong,
   },
 };

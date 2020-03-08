@@ -5,6 +5,7 @@ export default `
     url: String
     title: String
     image: Image
+    deleted: Boolean
   }
   
   input SongInput {
@@ -13,5 +14,6 @@ export default `
     url: String
     title: String
     image: ImageInput
+    deleted: Boolean
   }
 `;

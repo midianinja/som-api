@@ -6,6 +6,7 @@ const songsModel = new Schema({
   artist: { type: ObjectId, ref: 'artists', required: true },
   url: { type: String, required: true },
   title: { type: String, default: '' },
+  deleted: { type: Boolean, default: false },
   image: {
     mimified: { type: String, default: '' },
     original: { type: String, default: '' },

@@ -7,4 +7,8 @@ export default `
     song_id: ID!
     song: SongInput!
   ): Song
+  
+  deleteSong(
+    song_id: ID!
+  ): Song
 `;
