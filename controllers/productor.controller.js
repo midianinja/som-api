@@ -63,19 +63,15 @@ const update = (parent, args, { productors }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const findOne = (parent, args, { productors }) => {
-  const options = sliceArgs(args);
-
-  return productors.findOne(options.query.productor)
-    .populate('user')
-    .populate('events')
-    .populate('musical_styles')
-    .populate('location')
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
-};
+const findOne = (parent, args, { productors }) => productors.findOne({ _id: args.productor.id })
+  .populate('user')
+  .populate('events')
+  .populate('musical_styles')
+  .populate('location')
+  .then(resp => resp)
+  .catch((err) => {
+    throw new Error(err);
+  });
 
 /**
   * findAll - Essa função procura e retorna vários produtores de eventos da base de dados
