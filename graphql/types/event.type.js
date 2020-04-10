@@ -3,6 +3,7 @@ export default `
     id: ID
     productor: Productor 
     approved_artists: [Artist]
+    reproved_artists: [Artist]
     subscribers: [Artist]
     location: Location
     about: String
@@ -28,6 +29,7 @@ export default `
   input EventInput {
     productor: String 
     approved_artists: [String]
+    reproved_artists: [String]
     subscribers: [String]
     location: String
     

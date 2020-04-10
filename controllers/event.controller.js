@@ -15,6 +15,7 @@ const create = async (parent, args, { events, productors }) => {
   const event = await events.create(args.event)
     .then(resp => resp
       .populate('approved_artists')
+      .populate('reproved_artists')
       .populate({
         path: 'productor',
         populate: {
@@ -46,6 +47,7 @@ const update = (parent, args, { events }) => {
 
   return events.findOneAndUpdate({ _id: args.event_id }, args.event, { new: true })
     .populate('approved_artists')
+    .populate('reproved_artists')
     .populate({
       path: 'productor',
       populate: {
@@ -73,6 +75,7 @@ const findOne = (parent, args, { events }) => {
 
   return events.findOne({ _id: options.query.id })
     .populate('approved_artists')
+    .populate('reproved_artists')
     .populate({
       path: 'productor',
       populate: {
@@ -99,6 +102,7 @@ const findAll = (parent, args, { events }) => {
   const options = sliceArgs(args);
   return events.find(options.query.event)
     .populate('approved_artists')
+    .populate('reproved_artists')
     .populate({
       path: 'productor',
       populate: {
@@ -165,6 +169,7 @@ const search = async (parent, args, {
   await productors.populate(myEvents, { path: 'productor', populate: { path: 'location' } });
   await locations.populate(myEvents, { path: 'location' });
   await artists.populate(myEvents, { path: 'subscribers' });
+  await artists.populate(myEvents, { path: 'reproved_artists' });
 
 
   return myEvents.map(evt => ({ ...evt, id: evt._id })) || [];
@@ -189,6 +194,7 @@ const subscribe = async (parent, args, { events, artists }) => {
 
   return events.findOneAndUpdate({ _id: id }, { subscribers }, { new: true })
     .populate('approved_artists')
+    .populate('reproved_artists')
     .populate({
       path: 'productor',
       populate: {
@@ -211,9 +217,14 @@ const unsubscribe = async (parent, args, { events, artists }) => {
   const { id, artistID } = args;
   await artists.findOneAndUpdate({ _id: artistID }, { $pull: { subscribed_events: id } });
   return events.findOneAndUpdate({ _id: id }, {
-    $pull: { subscribers: artistID },
+    $pull: {
+      subscribers: artistID,
+      reproved_artists: artistID,
+      approved_artists: artistID,
+    },
   }, { new: true })
     .populate('approved_artists')
+    .populate('reproved_artists')
     .populate({
       path: 'productor',
       populate: {
@@ -224,6 +235,87 @@ const unsubscribe = async (parent, args, { events, artists }) => {
     .populate('subscribers');
 };
 
+const aprove = async (parent, args, { events, artists }) => {
+  const event = await events.findOneAndUpdate(
+    {
+      _id: args.event_id,
+    }, {
+      $pull: { subscribers: args.artist_id },
+      $push: { approved_artists: args.artist_id },
+    },
+  ).populate('approved_artists')
+    .populate('reproved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers');
+  await artists.findOneAndUpdate(
+    { _id: args.artst_id },
+    { $push: { approved_events: args.event_id } },
+  );
+  return event;
+};
+
+const reprove = async (parent, args, { events, artists }) => {
+  const event = await events.findOneAndUpdate(
+    { _id: args.event_id },
+    {
+      $pull: { subscribers: args.artist_id },
+      $push: { reproved_artists: args.artist_id },
+    },
+  ).populate('approved_artists')
+    .populate('reproved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers');
+  await artists.findOneAndUpdate(
+    { _id: args.artst_id },
+    { $push: { recused_events: args.event_id } },
+  );
+  return event;
+};
+
+const resetSubscription = async (parent, args, { events, artists }) => {
+  const event = await events.findOneAndUpdate(
+    { _id: args.event_id },
+    {
+      $pull: {
+        reproved_artists: args.artist_id,
+        approved_artists: args.artist_id,
+      },
+      $push: { subscribers: args.artist_id },
+    },
+  ).populate('approved_artists')
+    .populate('reproved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribers');
+  await artists.findOneAndUpdate(
+    { _id: args.artst_id },
+    {
+      $pull: {
+        recused_events: args.event_id,
+        approved_events: args.event_id,
+      },
+    },
+  );
+  return event;
+};
+
 export default {
   create,
   findOne,
@@ -232,4 +324,7 @@ export default {
   unsubscribe,
   subscribe,
   search,
+  aprove,
+  reprove,
+  resetSubscription,
 };

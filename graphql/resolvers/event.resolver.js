@@ -11,5 +11,8 @@ export default {
     updateEvent: EventController.update,
     subscribeEvent: EventController.subscribe,
     unsubscribeEvent: EventController.unsubscribe,
+    aproveArtist: EventController.aprove,
+    reproveArtist: EventController.reprove,
+    resetSubscriptionEvent: EventController.resetSubscription,
   },
 };
