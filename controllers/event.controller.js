@@ -26,7 +26,7 @@ const create = async (parent, args, { events, productors }) => {
       .populate('subscribers')
       .execPopulate());
   await productors.findOneAndUpdate(
-    { _id: event.productor._id },
+    { _id: event.productor },
     { $push: { events: event._id } },
   );
 
