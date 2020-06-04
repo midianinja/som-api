@@ -65,7 +65,14 @@ const update = (parent, args, { productors }) => {
   */
 const findOne = (parent, args, { productors }) => productors.findOne({ _id: args.productor.id })
   .populate('user')
-  .populate('events')
+  .populate({
+    path: 'events',
+    populate: [
+      'subscribers',
+      'approved_artists',
+      'reproved_artists',
+    ],
+  })
   .populate('musical_styles')
   .populate('location')
   .then(resp => resp)

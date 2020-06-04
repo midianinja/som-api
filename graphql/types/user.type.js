@@ -6,6 +6,8 @@ export default `
     type: String
     productor: Productor
     artist: Artist
+    following_artists: [Artist]
+    following_productors: [Productor]
     likes: [User]
   }
   

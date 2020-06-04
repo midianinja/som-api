@@ -8,6 +8,8 @@ const userModel = new Schema({
   productor: { type: ObjectId, ref: 'productors' },
   artist: { type: ObjectId, ref: 'artists' },
   likes: [{ type: ObjectId, ref: 'users' }],
+  following_artists: [{ type: ObjectId, ref: 'artists' }],
+  following_productors: [{ type: ObjectId, ref: 'productors' }],
 }, {
   usePushEach: true,
   timestamps: { updatedAt: 'updated_at', createdAt: 'created_at' },

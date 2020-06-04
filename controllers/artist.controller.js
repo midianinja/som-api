@@ -143,8 +143,15 @@ const findAll = (parent, args, { artists }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const follow = (parent, args, { artists }) => {
+const follow = async (parent, args, { artists, users }) => {
   const { artist, user } = args;
+  await users.findOneAndUpdate(
+    { _id: user },
+    {
+      $push: { following_artists: artist },
+    },
+    { new: true },
+  );
   return artists.findOneAndUpdate({ _id: artist }, { follows: { user } }, { new: true })
     .populate('user')
     .populate('approved_events')
@@ -154,6 +161,8 @@ const follow = (parent, args, { artists }) => {
     .populate('musical_genres')
     .populate('category')
     .populate('follows.user')
+    .populate('following_artists')
+    .populate('following_productors')
     .then(resp => resp)
     .catch((err) => {
       throw new Error(err);
@@ -168,25 +177,39 @@ const follow = (parent, args, { artists }) => {
   * @param {object} args Informações envadas na queuery ou mutation
   * @param {object} context Informações passadas no context para o apollo graphql
   */
-const unfollow = (parent, args, { artists }) => {
-  const { artist, user } = args;
-  return artists.findOneAndUpdate(
-    { _id: artist },
-    { $pull: { follows: { $elemMatch: { user } } } },
-    { new: true },
-  )
-    .populate('user')
-    .populate('approved_events')
-    .populate('subscribed_events')
-    .populate('recused_events')
-    .populate('musical_styles')
-    .populate('musical_genres')
-    .populate('category')
-    .populate('follows.user')
-    .then(resp => resp)
-    .catch((err) => {
-      throw new Error(err);
-    });
+const unfollow = async (parent, args, { artists, users }) => {
+  try {
+    const { artist, user } = args;
+    await users.findOneAndUpdate(
+      { _id: user },
+      {
+        $pull: { following_artists: artist },
+      },
+      { new: true },
+    );
+    const myartist = await artists.findOneAndUpdate(
+      { _id: artist },
+      { $pull: { follows: { user } } },
+      { new: true },
+    )
+      .populate('user')
+      .populate('approved_events')
+      .populate('subscribed_events')
+      .populate('recused_events')
+      .populate('musical_styles')
+      .populate('musical_genres')
+      .populate('category')
+      .populate('follows.user')
+      .then(resp => resp)
+      .catch((err) => {
+        throw new Error(err);
+      });
+    console.log('artist:', myartist);
+    return myartist;
+  } catch (err) {
+    console.log('err:', err);
+    throw err;
+  }
 };
 
 export default {
