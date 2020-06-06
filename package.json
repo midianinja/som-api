@@ -4,7 +4,7 @@
   "description": "",
   "main": "graphql.js",
   "dependencies": {
-    "apollo-server-express": "^2.4.8",
+    "apollo-server-express": "^2.14.2",
     "apollo-server-lambda": "^2.4.8",
     "axios": "^0.18.0",
     "dotenv": "^8.0.0",
