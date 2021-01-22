@@ -78,6 +78,7 @@ functions:
             - Content-Type
             - Access-Control-Allow-Origin
             - Origin
+            - x-api-key
             - Accept
           allowCredentials: true
      - http:
