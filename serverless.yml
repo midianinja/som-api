@@ -73,8 +73,6 @@ functions:
         path: /
         cors:
           origins:
-            - http://*
-            - https://*
             - https://main.dkeswowbvzjm7.amplifyapp.com/
           headers:
             - Content-Type
