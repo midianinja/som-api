@@ -75,6 +75,7 @@ functions:
           origins:
             - http://*
             - https://*
+            - https://main.dkeswowbvzjm7.amplifyapp.com/
           headers:
             - Content-Type
             - Access-Control-Allow-Origin
