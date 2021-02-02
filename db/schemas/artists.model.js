@@ -22,13 +22,17 @@ const artistModel = new Schema({
   musical_styles: [{ type: ObjectId, ref: 'musicalStyleOptions' }],
 
   facebook: { type: String, default: '' },
+  location: { type: ObjectId, ref: 'locations' },
   instagram: { type: String, default: '' },
   twitter: { type: String, default: '' },
   youtube: { type: String, default: '' },
+  whatsapp: { type: String, default: '' },
+  telegram: { type: String, default: '' },
+  integrants: [{ type: String, default: '' }],
 
   stage_map: { type: String, default: '' },
   tec_rider: { type: String, default: '' },
-  kit: { type: String, default: '' },
+  tec_release: { type: String, default: '' },
 
   follows: [{
     user: { type: ObjectId, ref: 'users' },

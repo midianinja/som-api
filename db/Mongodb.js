@@ -25,6 +25,11 @@ export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
         bufferCommands: false,
         bufferMaxEntries: 0,
         keepAlive: true,
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+
       });
       newConnection.model('acessibilityOptions', acessibilityOptions);
       newConnection.model('categoryOptions', categoryOptions);

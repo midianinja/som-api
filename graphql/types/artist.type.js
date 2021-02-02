@@ -28,15 +28,20 @@ export default `
     subscribed_events: [Event]
     recused_events: [Event]
     google_id: String
-    stage_map: String
-    tec_rider: String
+    location: Location
     kit: String
     twitter_id: String
     instagram_id: String
     spotify_id: String
     spotify_artist_link: String
+    tec_rider: String
+    stage_map: String
+    tec_release: String
     facebook_id: String
     email: String
+    whatsapp: String
+    telegram: String
+    integrants: [String]
     follows: [ArtistFollow]
   }
   
@@ -49,9 +54,11 @@ export default `
     avatar_image: ImageInput
     about: String
     country: String
-    stage_map: String
     spotify_artist_link: String
+    stage_map: String
     tec_rider: String
+    tec_release: String
+    location: String
     kit: String
     state: String
     city: String
@@ -59,6 +66,9 @@ export default `
     musical_styles: [String]
     facebook: String
     instagram: String
+    whatsapp: String
+    telegram: String
+    integrants: [String]
     twitter: String
     youtube: String
     email: String
