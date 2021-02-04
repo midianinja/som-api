@@ -73,8 +73,10 @@ functions:
         path: /
         cors:
           origins:
-            - http://*
-            - https://*
+            - https://dev.som.vc
+            - https://stag.som.vc
+            - https://www.som.vc
+            - https://som.vc
           headers:
             - Content-Type
             - Access-Control-Allow-Origin
