@@ -37,6 +37,10 @@ const update = (parent, args, { users }) => {
     .populate({
       path: 'productor',
       populate: ['musical_styles', 'location'],
+    })
+    .populate({
+      path: 'artist',
+      populate: ['musical_styles', 'location'],
     });
 };
 
@@ -58,11 +62,13 @@ const findOne = (parent, args, { users }) => {
         { path: 'user' },
         { path: 'approved_events' },
         { path: 'subscribed_events' },
+        { path: 'songs' },
         { path: 'recused_events' },
         { path: 'musical_genres' },
         { path: 'musical_styles' },
         { path: 'category' },
         { path: 'follows.user' },
+        { path: 'location' },
       ],
     })
     .populate('productor')
@@ -95,6 +101,7 @@ const findAll = (parent, args, { users }) => {
         { path: 'recused_events' },
         { path: 'musical_genres' },
         { path: 'musical_styles' },
+        { path: 'lcoation' },
         { path: 'category' },
         { path: 'follows.user' },
       ],

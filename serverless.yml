@@ -73,14 +73,19 @@ functions:
         path: /
         cors:
           origins:
+<<<<<<< HEAD
             - https://dev.som.vc
             - https://stag.som.vc
             - https://www.som.vc
             - https://som.vc
+=======
+            - https://main.dkeswowbvzjm7.amplifyapp.com
+>>>>>>> 8af9093c6f5622905b065c347fd145bd54f90d30
           headers:
             - Content-Type
             - Access-Control-Allow-Origin
             - Origin
+            - x-api-key
             - Accept
           allowCredentials: true
      - http:
