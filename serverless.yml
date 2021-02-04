@@ -78,13 +78,6 @@ functions:
             - https://www.som.vc
             - https://som.vc
             - https://main.dkeswowbvzjm7.amplifyapp.com
-          headers:
-            - Content-Type
-            - Access-Control-Allow-Origin
-            - Origin
-            - x-api-key
-            - Accept
-          allowCredentials: true
      - http:
         method: GET
         path: playground
