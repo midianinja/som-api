@@ -12,32 +12,32 @@ const create = async (parent, args, { artists, users }) => {
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
+  let artist;
+
   try {
-    // Craete artist in the database
-    const artist = await artists.create(args.artist)
-      .then(async resp => resp.populate('user')
-        // .populate('approved_events')
-        // .populate('subscribed_events')
-        // .populate('recused_events')
-        // .populate('category')
-        .populate('location')
-        .populate('musical_styles')
-        .populate('songs')
-        .populate('user')
-        .execPopulate())
-      .catch((err) => {
-        throw new Error(err);
-      });
+    artist = await artists.create(args.artist);
+    artist = await artist.populate('location')
+      .populate('musical_styles')
+      .populate('songs')
+      .populate('user')
+      .execPopulate();
+  } catch (err) {
+    console.log('err:', err);
+    throw err;
+  }
+
+  try {
     await users.findOneAndUpdate(
       { _id: artist.user._id },
       { artist: artist._id },
       { new: true },
     );
-    return artist;
   } catch (err) {
     console.log('err:', err);
     throw err;
   }
+
+  return artist;
 };
 
 /**
