@@ -9,6 +9,7 @@ import { sliceArgs } from '../utils/query.utils';
   * @param {object} context Informações passadas no context para o apollo graphql
   */
 const create = async (parent, args, { artists, users }) => {
+  console.log('artist', args.artist);
   const validate = {}; // validateArtist(); fazer função de validação
   if (validate.error) throw new Error(validate.msg);
 
@@ -76,6 +77,10 @@ const update = (parent, args, { artists }) => {
 const findOne = (parent, args, { artists }) => artists
   .findOne({ _id: args.id })
   .populate('user')
+  .populate({
+    path: 'user',
+    populate: ['following_artists', 'following_productors'],
+  })
   .populate('approved_events')
   .populate('subscribed_events')
   .populate('recused_events')
@@ -194,6 +199,7 @@ const unfollow = async (parent, args, { artists, users }) => {
       },
       { new: true },
     );
+
     const myartist = await artists.findOneAndUpdate(
       { _id: artist },
       { $pull: { follows: { user } } },
@@ -212,10 +218,9 @@ const unfollow = async (parent, args, { artists, users }) => {
       .catch((err) => {
         throw new Error(err);
       });
-    console.log('artist:', myartist);
+
     return myartist;
   } catch (err) {
-    console.log('err:', err);
     throw err;
   }
 };
