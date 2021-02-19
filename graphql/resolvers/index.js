@@ -12,6 +12,7 @@ import country from './country.resolver';
 import state from './state.resolver';
 import city from './city.resolver';
 import location from './location.resolver';
+import productorOccupation from './productorOccupation.resolver';
 
 export default {
   Query: {
@@ -27,6 +28,7 @@ export default {
     ...country.queries,
     ...state.queries,
     ...city.queries,
+    ...productorOccupation.queries,
   },
   Mutation: {
     ...acessibilityOption.mutations,
@@ -43,5 +45,6 @@ export default {
     ...state.mutations,
     ...city.mutations,
     ...location.mutations,
+    ...productorOccupation.mutations,
   },
 };

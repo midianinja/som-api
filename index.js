@@ -34,6 +34,7 @@ const server = new ApolloServer(
         context,
         acessibilityOptions: conn.model('acessibilityOptions'),
         categoryOptions: conn.model('categoryOptions'),
+        productorOccupations: conn.model('productorOccupations'),
         musicalStyleOptions: conn.model('musicalStyleOptions'),
         spaceCapacityOptions: conn.model('spaceCapacityOptions'),
         productors: conn.model('productors'),

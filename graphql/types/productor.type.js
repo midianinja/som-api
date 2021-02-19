@@ -11,6 +11,7 @@ export default `
     followers: [User]
     following: [Artist]
     musical_styles: [MusicalStyleOption]
+    occupations: [ProductorOccupation]
     events: [Event]
     status: String
     main_phone: String
@@ -46,6 +47,7 @@ export default `
     facebook: String
     twitter: String
     instagram: String
+    occupations: [ID]
     youtube: String
   }
 `;

@@ -12,6 +12,7 @@ import countryMutation from './country.mutation';
 import cityMutation from './city.mutation';
 import stateMutation from './state.mutation';
 import locationMutation from './location.mutation';
+import productorOccupation from './productorOccupation.mutation';
 
 export default `
   type Mutation {
@@ -29,5 +30,6 @@ export default `
     ${userMutation}
     ${databaseMutation}
     ${eventMutation}
+    ${productorOccupation}
   }
 `;

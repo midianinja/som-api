@@ -17,6 +17,7 @@ const create = async (parent, args, { productors, users }) => {
       .populate('user')
       .populate('events')
       .populate('musical_styles')
+      .populate('occupations')
       .populate('location')
       .execPopulate())
     .catch((err) => {
@@ -48,6 +49,7 @@ const update = (parent, args, { productors }) => {
     .populate('user')
     .populate('events')
     .populate('musical_styles')
+    .populate('occupations')
     .populate('location')
     .then(resp => resp)
     .catch((err) => {
@@ -74,6 +76,7 @@ const findOne = (parent, args, { productors }) => productors.findOne({ _id: args
     ],
   })
   .populate('musical_styles')
+  .populate('occupations')
   .populate('location')
   .then(resp => resp)
   .catch((err) => {
@@ -94,6 +97,7 @@ const findAll = (parent, args, { productors }) => {
     .populate('user')
     .populate('events')
     .populate('musical_styles')
+    .populate('occupations')
     .populate('location')
     .then(resp => resp)
     .catch((err) => {

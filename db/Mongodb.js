@@ -8,6 +8,7 @@ import spaceCapacityOptions from './schemas/spaceCapacityOptions.model';
 import productors from './schemas/productors.model';
 import artists from './schemas/artists.model';
 import users from './schemas/users.model';
+import productorOccupations from './schemas/productorOccupations.model';
 import events from './schemas/events.model';
 import locations from './schemas/locations.model';
 import songs from './schemas/songs.model';
@@ -36,6 +37,7 @@ export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
       newConnection.model('musicalStyleOptions', musicalStyleOptions);
       newConnection.model('spaceCapacityOptions', spaceCapacityOptions);
       newConnection.model('productors', productors);
+      newConnection.model('productorOccupations', productorOccupations);
       newConnection.model('artists', artists);
       newConnection.model('users', users);
       newConnection.model('events', events);

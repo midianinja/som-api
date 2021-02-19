@@ -3,6 +3,7 @@ import acessibilityOptionQuery from './acessibilityOption.query';
 import categoryOptionQuery from './categoryOption.query';
 import musicalStyleOptionQuery from './musicalStyleOption.query';
 import spaceCapacityOptionQuery from './spaceCapacityOption.query';
+import productorOccupationQuery from './productorOccupation.query';
 // entities
 import productorQuery from './productor.query';
 import artistQuery from './artist.query';
@@ -28,5 +29,6 @@ export default `
     ${userQuery}
     ${eventQuery}
     ${songQuery}
+    ${productorOccupationQuery}
   }
 `;

@@ -14,6 +14,7 @@ const productModel = Schema({
   followers: [{ type: ObjectId, ref: 'users' }],
   following: [{ type: ObjectId, ref: 'artists' }],
   musical_styles: [{ type: ObjectId, ref: 'musicalStyleOptions' }],
+  occupations: [{ type: ObjectId, ref: 'productorOccupations' }],
   main_phone: { type: String, defualt: '' },
   secondary_phone: { type: String, defualt: '' },
   whatsapp: { type: String, defualt: '' },

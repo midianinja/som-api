@@ -13,6 +13,7 @@ import songType from './song.type';
 import countryType from './country.type';
 import cityType from './city.type';
 import stateType from './state.type';
+import productorOccupationType from './productorOccupation.type';
 
 export default `
   scalar JSON
@@ -32,6 +33,7 @@ export default `
   ${categoryOptionType}
   ${musicalStyleOptionType}
   ${spaceCapacityOptionType}
+  ${productorOccupationType}
 
   ${paginatorType}
 `;
