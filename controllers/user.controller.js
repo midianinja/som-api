@@ -36,7 +36,7 @@ const update = (parent, args, { users }) => {
     .populate('following_productors')
     .populate({
       path: 'productor',
-      populate: ['musical_styles', 'location'],
+      populate: ['musical_styles', 'location', 'occupations'],
     })
     .populate({
       path: 'artist',
@@ -77,7 +77,7 @@ const findOne = (parent, args, { users }) => {
     .populate('following_productors')
     .populate({
       path: 'productor',
-      populate: ['musical_styles', 'location'],
+      populate: ['musical_styles', 'location', 'occupations'],
     });
 };
 
@@ -112,7 +112,7 @@ const findAll = (parent, args, { users }) => {
     .populate('following_productors')
     .populate({
       path: 'productor',
-      populate: ['musical_styles', 'location'],
+      populate: ['musical_styles', 'location', 'occupations'],
     });
 };
 
