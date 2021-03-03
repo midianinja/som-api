@@ -16,6 +16,12 @@ const create = async (parent, args, { productors, users }) => {
     .then(resp => resp
       .populate('user')
       .populate('events')
+      .populate({
+        path: 'events',
+        populate: {
+          path: 'location',
+        },
+      })
       .populate('musical_styles')
       .populate('occupations')
       .populate('location')
@@ -67,12 +73,14 @@ const update = (parent, args, { productors }) => {
   */
 const findOne = (parent, args, { productors }) => productors.findOne({ _id: args.productor.id })
   .populate('user')
+  .populate('events')
   .populate({
     path: 'events',
     populate: [
       'subscribers',
       'approved_artists',
       'reproved_artists',
+      'location',
     ],
   })
   .populate('musical_styles')
@@ -96,6 +104,15 @@ const findAll = (parent, args, { productors }) => {
   return productors.find(options.query.productor)
     .populate('user')
     .populate('events')
+    .populate({
+      path: 'events',
+      populate: [
+        'subscribers',
+        'approved_artists',
+        'reproved_artists',
+        'location',
+      ],
+    })
     .populate('musical_styles')
     .populate('occupations')
     .populate('location')
