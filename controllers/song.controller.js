@@ -47,6 +47,7 @@ const update = (parent, args, { songs }) => {
       throw new Error(err);
     });
 };
+
 /**
   * deleteSong - Essa função deleta uma musica.
   *
@@ -72,6 +73,34 @@ const deleteSong = async (parent, args, { songs, artists }) => {
   );
   return {};
 };
+
+/**
+  * favoriteSong - Essa função favorita uma musica.
+  *
+  * @function update
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações enviadas na query ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const favoriteSong = async (parent, args, { users }) => users.findOneAndUpdate(
+  { _id: args.user_id },
+  { $push: { favorited_songs: args.song_id } },
+  { new: true },
+);
+
+/**
+  * unfavoriteSong - Essa função desfavorita uma musica.
+  *
+  * @function update
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações enviadas na query ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const unfavoriteSong = async (parent, args, { users }) => users.findOneAndUpdate(
+  { _id: args.user_id },
+  { $pull: { favorited_songs: args.song_id } },
+  { new: true },
+);
 
 /**
   * findOne - Essa função procura e returna uma opção de acessibilidade.
@@ -114,4 +143,6 @@ export default {
   findAll,
   update,
   deleteSong,
+  favoriteSong,
+  unfavoriteSong,
 };

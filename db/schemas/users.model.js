@@ -8,6 +8,7 @@ const userModel = new Schema({
   productor: { type: ObjectId, ref: 'productors' },
   artist: { type: ObjectId, ref: 'artists' },
   likes: [{ type: ObjectId, ref: 'users' }],
+  favorited_songs: [{ type: ObjectId, ref: 'songs' }],
   following_artists: [{ type: ObjectId, ref: 'artists' }],
   following_productors: [{ type: ObjectId, ref: 'productors' }],
 }, {

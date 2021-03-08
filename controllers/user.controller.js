@@ -34,6 +34,7 @@ const update = (parent, args, { users }) => {
     .populate('productor.musical_styles')
     .populate('following_artists')
     .populate('following_productors')
+    .populate('favorited_songs')
     .populate({
       path: 'productor',
       populate: ['musical_styles', 'location', 'occupations'],
@@ -75,6 +76,7 @@ const findOne = (parent, args, { users }) => {
     .populate('productor.musical_styles')
     .populate('following_artists')
     .populate('following_productors')
+    .populate('favorited_songs')
     .populate({
       path: 'productor',
       populate: ['musical_styles', 'location', 'occupations'],
@@ -110,6 +112,7 @@ const findAll = (parent, args, { users }) => {
     .populate('productor.musical_styles')
     .populate('following_artists')
     .populate('following_productors')
+    .populate('favorited_songs')
     .populate({
       path: 'productor',
       populate: ['musical_styles', 'location', 'occupations'],

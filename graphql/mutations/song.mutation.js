@@ -11,4 +11,14 @@ export default `
   deleteSong(
     song_id: ID!
   ): Song
+
+  favoriteSong(
+    song_id: ID!
+    user_id: ID!
+  ): Song
+
+  unfavoriteSong(
+    song_id: ID!
+    user_id: ID!
+  ): Song
 `;

@@ -9,5 +9,7 @@ export default {
     createSong: SongController.create,
     updateSong: SongController.update,
     deleteSong: SongController.deleteSong,
+    favoriteSong: SongController.favoriteSong,
+    unfavoriteSong: SongController.unfavoriteSong,
   },
 };

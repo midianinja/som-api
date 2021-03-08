@@ -7,6 +7,7 @@ export default `
     productor: Productor
     artist: Artist
     following_artists: [Artist]
+    favorited_songs: [Song]
     following_productors: [Productor]
     likes: [User]
   }
