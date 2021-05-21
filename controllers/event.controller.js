@@ -14,6 +14,8 @@ const create = async (parent, args, { events, productors }) => {
 
   const event = await events.create(args.event)
     .then(resp => resp
+      .populate('approved_productors')
+      .populate('reproved_productors')
       .populate('approved_artists')
       .populate('reproved_artists')
       .populate({
@@ -23,6 +25,7 @@ const create = async (parent, args, { events, productors }) => {
         },
       })
       .populate('location')
+      .populate('subscribed_productors')
       .populate('subscribers')
       .execPopulate());
   await productors.findOneAndUpdate(
@@ -46,6 +49,8 @@ const update = (parent, args, { events }) => {
   if (validate.error) throw new Error(validate.msg);
 
   return events.findOneAndUpdate({ _id: args.event_id }, args.event, { new: true })
+    .populate('approved_productors')
+    .populate('reproved_productors')
     .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
@@ -55,6 +60,7 @@ const update = (parent, args, { events }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
@@ -74,6 +80,8 @@ const findOne = (parent, args, { events }) => {
   const options = sliceArgs(args);
 
   return events.findOne({ _id: options.query.id })
+    .populate('approved_productors')
+    .populate('reproved_productors')
     .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
@@ -83,6 +91,7 @@ const findOne = (parent, args, { events }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
@@ -101,6 +110,8 @@ const findOne = (parent, args, { events }) => {
 const findAll = (parent, args, { events }) => {
   const options = sliceArgs(args);
   return events.find(options.query.event)
+    .populate('approved_productors')
+    .populate('reproved_productors')
     .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
@@ -110,6 +121,7 @@ const findAll = (parent, args, { events }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers')
     .then(resp => resp)
     .catch((err) => {
@@ -193,6 +205,8 @@ const subscribe = async (parent, args, { events, artists }) => {
   await artists.findOneAndUpdate({ _id: artistID }, { $push: { subscribed_events: id } });
 
   return events.findOneAndUpdate({ _id: id }, { subscribers }, { new: true })
+    .populate('approved_productors')
+    .populate('reproved_productors')
     .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
@@ -202,6 +216,46 @@ const subscribe = async (parent, args, { events, artists }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
+    .populate('subscribers');
+};
+
+
+/**
+  * subscribeProductor - Essa função adiciona um produtor aos inscritos
+  *
+  * @function subscribe
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const subscribeProductor = async (parent, args, { events, productors }) => {
+  const { id, productor_id: productorId } = args;
+
+  console.log(id, productorId);
+
+  const event = await events.findOne({ _id: id });
+  const parsedEvent = JSON.parse(JSON.stringify(event));
+
+  const subscribers = parsedEvent.subscribers.filter(sbs => sbs !== productorId);
+  subscribers.push(productorId);
+
+  await productors
+    .findOneAndUpdate({ _id: productorId }, { $push: { subscribed_oportunities: id } });
+
+  return events.findOneAndUpdate({ _id: id }, { subscribed_productors: subscribers }, { new: true })
+    .populate('approved_productors')
+    .populate('reproved_productors')
+    .populate('approved_artists')
+    .populate('reproved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers');
 };
 
@@ -223,6 +277,8 @@ const unsubscribe = async (parent, args, { events, artists }) => {
       approved_artists: artistID,
     },
   }, { new: true })
+    .populate('approved_productors')
+    .populate('reproved_productors')
     .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
@@ -232,6 +288,43 @@ const unsubscribe = async (parent, args, { events, artists }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
+    .populate('subscribers');
+};
+
+/**
+  * unsubscribe - Essa função remove artista aos inscritos
+  *
+  * @function unsubscribe
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const unsubscribeProductor = async (parent, args, { events, productors }) => {
+  const { id, productor_id: productorId } = args;
+
+  await productors
+    .findOneAndUpdate({ _id: productorId }, { $pull: { subscribed_oportunities: id } });
+
+  return events.findOneAndUpdate({ _id: id }, {
+    $pull: {
+      subscribed_productors: productorId,
+      reproved_productors: productorId,
+      approved_productors: productorId,
+    },
+  }, { new: true })
+    .populate('approved_productors')
+    .populate('reproved_productors')
+    .populate('approved_artists')
+    .populate('reproved_artists')
+    .populate({
+      path: 'productor',
+      populate: {
+        path: 'location',
+      },
+    })
+    .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers');
 };
 
@@ -243,7 +336,9 @@ const aprove = async (parent, args, { events, artists }) => {
       $pull: { subscribers: args.artist_id },
       $push: { approved_artists: args.artist_id },
     },
-  ).populate('approved_artists')
+  ).populate('approved_productors')
+    .populate('reproved_productors')
+    .populate('approved_artists')
     .populate('reproved_artists')
     .populate({
       path: 'productor',
@@ -252,6 +347,7 @@ const aprove = async (parent, args, { events, artists }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers');
   await artists.findOneAndUpdate(
     { _id: args.artst_id },
@@ -276,6 +372,7 @@ const reprove = async (parent, args, { events, artists }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers');
   await artists.findOneAndUpdate(
     { _id: args.artst_id },
@@ -303,7 +400,9 @@ const resetSubscription = async (parent, args, { events, artists }) => {
       },
     })
     .populate('location')
+    .populate('subscribed_productors')
     .populate('subscribers');
+
   await artists.findOneAndUpdate(
     { _id: args.artst_id },
     {
@@ -313,6 +412,7 @@ const resetSubscription = async (parent, args, { events, artists }) => {
       },
     },
   );
+
   return event;
 };
 
@@ -323,8 +423,10 @@ export default {
   update,
   unsubscribe,
   subscribe,
+  subscribeProductor,
   search,
   aprove,
   reprove,
   resetSubscription,
+  unsubscribeProductor,
 };

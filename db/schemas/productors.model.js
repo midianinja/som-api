@@ -25,6 +25,7 @@ const productModel = Schema({
   instagram: { type: String, defualt: '' },
   youtube: { type: String, defualt: '' },
   events: [{ type: ObjectId, ref: 'events' }],
+  subscribed_oportunities: [{ type: ObjectId, ref: 'events' }],
 }, {
   usePushEach: true,
   timestamps: { updatedAt: 'updated_at', createdAt: 'created_at' },

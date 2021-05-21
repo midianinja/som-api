@@ -13,6 +13,7 @@ export default `
     musical_styles: [MusicalStyleOption]
     occupations: [ProductorOccupation]
     events: [Event]
+    subscribed_oportunities: [Event]
     status: String
     main_phone: String
     secondary_phone: String

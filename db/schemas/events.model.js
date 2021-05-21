@@ -6,8 +6,11 @@ const defaultClosingDate = +new Date() + 29 * 24 * 60 * 60 * 1000;
 const eventsModel = new Schema({
   productor: { type: ObjectId, ref: 'productors' },
   approved_artists: [{ type: ObjectId, ref: 'artists' }],
+  approved_productors: [{ type: ObjectId, ref: 'productors' }],
   reproved_artists: [{ type: ObjectId, ref: 'artists' }],
+  reproved_productors: [{ type: ObjectId, ref: 'productors' }],
   subscribers: [{ type: ObjectId, ref: 'artists' }],
+  subscribed_productors: [{ type: ObjectId, ref: 'productors' }],
   location: { type: ObjectId, ref: 'locations' },
   name: { type: String, default: '' },
   about: { type: String, default: '' },

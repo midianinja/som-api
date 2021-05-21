@@ -5,6 +5,11 @@ export default `
     approved_artists: [Artist]
     reproved_artists: [Artist]
     subscribers: [Artist]
+    
+    approved_productors: [Productor]
+    reproved_productors: [Productor]
+    subscribed_productors: [Productor]
+
     location: Location
     about: String
     
@@ -28,9 +33,15 @@ export default `
   
   input EventInput {
     productor: String 
+
     approved_artists: [String]
     reproved_artists: [String]
     subscribers: [String]
+
+    approved_productors: [String]
+    reproved_productors: [String]
+    subscribed_productors: [String]
+    
     location: String
     
     name: String
