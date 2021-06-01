@@ -15,6 +15,9 @@ import songs from './schemas/songs.model';
 import countries from './schemas/country.model';
 import states from './schemas/state.model';
 import cities from './schemas/city.model';
+import communityUsers from './schemas/communityUser.model';
+import highlightedOportunities from './schemas/highlighted_oportunities.model';
+import news from './schemas/news.model';
 
 export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
   console.log('mongoUrl:', mongoUrl);
@@ -46,6 +49,10 @@ export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
       newConnection.model('countries', countries);
       newConnection.model('states', states);
       newConnection.model('cities', cities);
+      newConnection.model('communityUsers', communityUsers);
+      newConnection.model('highlightedOportunities', highlightedOportunities);
+      newConnection.model('news', news);
+
       return newConnection;
     }
     console.log('=> using existing database connection');

@@ -46,6 +46,9 @@ const server = new ApolloServer(
         countries: conn.model('countries'),
         states: conn.model('states'),
         cities: conn.model('cities'),
+        communityUsers: conn.model('communityUsers'),
+        news: conn.model('news'),
+        highlightedOportunities: conn.model('highlightedOportunities'),
       });
     },
   },
