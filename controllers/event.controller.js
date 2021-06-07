@@ -130,6 +130,63 @@ const findAll = (parent, args, { events }) => {
 };
 
 /**
+  * Essa função procura e retorna os ultimos eventos da base de dados
+  * para artistas
+  * @function findLastPostedToArtist
+  * @param {object} parent Informações de um possível pai
+  * @param {object} args Informações envadas na queuery ou mutation
+  * @param {object} context Informações passadas no context para o apollo graphql
+  */
+const findLastPostedToArtist = (parent, args, { events }) => events.find({ is_to_artist: true })
+  .sort({ created_at: -1 })
+  .populate('approved_productors')
+  .populate('reproved_productors')
+  .populate('approved_artists')
+  .populate('reproved_artists')
+  .populate({
+    path: 'productor',
+    populate: {
+      path: 'location',
+    },
+  })
+  .populate('location')
+  .populate('subscribed_productors')
+  .populate('subscribers')
+  .then(resp => resp)
+  .catch((err) => {
+    throw new Error(err);
+  });
+
+/**
+* Essa função procura e retorna os ultimos eventos da base de dados
+* para produtores
+* @function findLastPostedToArtist
+* @param {object} parent Informações de um possível pai
+* @param {object} args Informações envadas na queuery ou mutation
+* @param {object} context Informações passadas no context para o apollo graphql
+*/
+const findLastPostedToProductor = (parent, args, { events }) => events
+  .find({ is_to_productor: true })
+  .sort({ created_at: -1 })
+  .populate('approved_productors')
+  .populate('reproved_productors')
+  .populate('approved_artists')
+  .populate('reproved_artists')
+  .populate({
+    path: 'productor',
+    populate: {
+      path: 'location',
+    },
+  })
+  .populate('location')
+  .populate('subscribed_productors')
+  .populate('subscribers')
+  .then(resp => resp)
+  .catch((err) => {
+    throw new Error(err);
+  });
+
+/**
   * search - Essa função procura e retorna vários eventos da base de dados
   *
   * @function search
@@ -231,8 +288,6 @@ const subscribe = async (parent, args, { events, artists }) => {
   */
 const subscribeProductor = async (parent, args, { events, productors }) => {
   const { id, productor_id: productorId } = args;
-
-  console.log(id, productorId);
 
   const event = await events.findOne({ _id: id });
   const parsedEvent = JSON.parse(JSON.stringify(event));
@@ -429,4 +484,6 @@ export default {
   reprove,
   resetSubscription,
   unsubscribeProductor,
+  findLastPostedToProductor,
+  findLastPostedToArtist,
 };
