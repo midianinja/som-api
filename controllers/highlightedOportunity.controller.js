@@ -12,7 +12,8 @@ const create = async (parent, args, { highlightedOportunities }) => {
 
   // cria uma oportunidade em destaque no banco de dados
   return highlightedOportunities.create(args.highlighted_oportunity)
-    .then(async resp => resp.populate('oportunity')
+    .then(resp => resp
+      .populate('oportunity')
       .execPopulate())
     .catch((err) => {
       throw new Error(err);
