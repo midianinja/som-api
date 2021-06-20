@@ -110,6 +110,8 @@ const findOne = (parent, args, { events }) => {
 const findAll = (parent, args, { events }) => {
   const options = sliceArgs(args);
   return events.find(options.query.event)
+    .sort(options.paginator.sort || {})
+    .limit(options.paginator.limit || 0)
     .populate('approved_productors')
     .populate('reproved_productors')
     .populate('approved_artists')
