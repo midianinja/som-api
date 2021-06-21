@@ -19,13 +19,14 @@ import communityUsers from './schemas/communityUser.model';
 import highlightedOportunities from './schemas/highlighted_oportunities.model';
 import news from './schemas/news.model';
 
-export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
-  console.log('mongoUrl:', mongoUrl);
+let connection;
+
+export default async ({ mongoUrl = 'mongodb://localhost/som-local' }) => {
   try {
-    if (!conn) {
+    if (!connection) {
       console.log('=> using new database connection');
 
-      const newConnection = await mongoose.createConnection(mongoUrl, {
+      connection = await mongoose.createConnection(mongoUrl, {
         bufferCommands: false,
         bufferMaxEntries: 0,
         keepAlive: true,
@@ -35,29 +36,31 @@ export default async ({ conn, mongoUrl = 'mongodb://localhost/som-local' }) => {
         useUnifiedTopology: true,
 
       });
-      newConnection.model('acessibilityOptions', acessibilityOptions);
-      newConnection.model('categoryOptions', categoryOptions);
-      newConnection.model('musicalStyleOptions', musicalStyleOptions);
-      newConnection.model('spaceCapacityOptions', spaceCapacityOptions);
-      newConnection.model('productors', productors);
-      newConnection.model('productorOccupations', productorOccupations);
-      newConnection.model('artists', artists);
-      newConnection.model('users', users);
-      newConnection.model('events', events);
-      newConnection.model('locations', locations);
-      newConnection.model('songs', songs);
-      newConnection.model('countries', countries);
-      newConnection.model('states', states);
-      newConnection.model('cities', cities);
-      newConnection.model('communityUsers', communityUsers);
-      newConnection.model('highlightedOportunities', highlightedOportunities);
-      newConnection.model('news', news);
 
-      return newConnection;
+      connection.model('acessibilityOptions', acessibilityOptions);
+      connection.model('categoryOptions', categoryOptions);
+      connection.model('musicalStyleOptions', musicalStyleOptions);
+      connection.model('spaceCapacityOptions', spaceCapacityOptions);
+      connection.model('productors', productors);
+      connection.model('productorOccupations', productorOccupations);
+      connection.model('artists', artists);
+      connection.model('users', users);
+      connection.model('events', events);
+      connection.model('locations', locations);
+      connection.model('songs', songs);
+      connection.model('countries', countries);
+      connection.model('states', states);
+      connection.model('cities', cities);
+      connection.model('communityUsers', communityUsers);
+      connection.model('highlightedOportunities', highlightedOportunities);
+      connection.model('news', news);
+
+      return connection;
     }
-    console.log('=> using existing database connection');
-    return conn;
   } catch (err) {
     throw err;
   }
+
+  console.log('=> using exist database connection');
+  return connection;
 };

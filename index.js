@@ -4,7 +4,7 @@ import schema from './graphql/schema';
 import MongoDB from './db/Mongodb';
 
 dotenv.config();
-let conn = null;
+let db;
 
 const server = new ApolloServer(
   {
@@ -22,12 +22,15 @@ const server = new ApolloServer(
     },
     path: '/graphql',
     context: async ({ event, context }) => {
-      conn = await MongoDB({
-        conn,
+      const conn = await MongoDB({
+        conn: db,
         mongoUrl: event.stageVariables ? `mongodb+${event.stageVariables.MONGO_URL}` : process.env.MONGO_URL,
       });
 
+      db = conn;
+
       return ({
+        db,
         headers: event.headers,
         functionName: context.functionName,
         event,
